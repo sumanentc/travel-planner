@@ -190,6 +190,7 @@ def get_prompt(user_input: str):
     - Travel itinerary should be provided day wise.
     - Please consider the user preference such as month of travel, destination, number of days of travel, themes and any other preferences provided in the context.
     - The output should be in raw markdown for javascript format in Paragraph style.
+    - Please check the best month of travel to the input destination. If it is different from input month then also provide recommendation for the best month to travle to input destination.
     - Don't mention based on the user input in the response.
     - Don't mention Based on the UserInput in the response
     - Don't mention As an expert travel planner in the response

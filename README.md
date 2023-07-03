@@ -4,6 +4,7 @@ The travel planner application is designed to assist users in creating and organ
 
 Key features of the travel planner app include:
 * Itinerary Creation: Users can create detailed itineraries by inputting their destination, travel dates, and duration of the trip.
+* Context based recommendation: App will provide recommendation based on past context.
 
 Overall, the travel planner app aims to simplify the process of itinerary creation, enhance travel organization, and provide users with a seamless and enjoyable travel planning experience.
 

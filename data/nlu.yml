@@ -114,17 +114,20 @@ nlu:
     - I'm planning a trip to [Singapore](place). Can you provide some assistance with creating an itinerary?
     - I would appreciate some help in creating a detailed itinerary for my trip to [Maldives](place). Any suggestions?
     - I would appreciate some help in creating a detailed itinerary for my trip to [Australia](place). Any suggestions?
-    - I'm planning a trip to [Turkey](place) in [april](jan). Can you provide some assistance with creating an itinerary?
-    - I need help organizing my travel plans for my trip to [Australia](month) in [feb](month). Can you offer any guidance?
+    - I'm planning a trip to [Turkey](place) in [april](month). Can you provide some assistance with creating an itinerary?
+    - I need help organizing my travel plans for my trip to [Australia](place) in [feb](month). Can you offer any guidance?
+    - I need help organizing my travel plans for my trip to [Australia](place) in [January](month). Can you offer any guidance?
+    - I need help organizing my travel plans for my trip to [Australia](place) in [March](month). Can you offer any guidance?
     - I'm looking for recommendations and suggestions for things to do in [Bali](place) during [march](month). Can you help me create an itinerary?
     - I'm feeling overwhelmed with planning my activities in [Singapore](place) for [april](month). Is there someone who can assist me with my itinerary?
+    - I would appreciate some help in creating a detailed itinerary for my trip to [Uttarakhand](place) in [April](month). Any suggestions?
     - I'm seeking assistance in mapping out my travel plans for [Vietnam](place) in [may](month). Can you provide any recommendations?
     - I would appreciate some help in creating a detailed itinerary for my trip to [Uttarakhand](place) in [june](month). Any suggestions?
     - I'm in need of expert advice for planning my activities in [South Africa] during [july](month). How can I get itinerary help specific to that time of year?
     - Where can I find resources or professionals who can assist me in developing a travel itinerary for [Egypt](place) in [august](month)?
     - I'm unsure about the best attractions and sights to include in my itinerary for [Egypt](place) in [sept](month). Are there any services available for itinerary planning during that time?
     - Who can I contact to get assistance with organizing my travel itinerary for [rajasthan](place) in [oct](month)?
-    - I need help organizing my travel plans for my trip to [Australia](month) in [nov](month). Can you offer any guidance?
+    - I need help organizing my travel plans for my trip to [Australia](place) in [nov](month). Can you offer any guidance?
     - I'm planning a trip to [Thailand](place) in [jan](month) for [5](days). Can you provide some assistance with creating an itinerary?
     - I need help organizing my travel plans for [Goa](place) in [nov](month) for a [4](days) trip. Can you offer any guidance?
     - I'm looking for recommendations and suggestions for things to do in [Srilanka](place) during [dec](month) for a [7](days) trip. Can you help me create an itinerary?
@@ -136,6 +139,7 @@ nlu:
     - Where can I find resources or professionals who can assist me in developing a travel itinerary for [Venice] in [dec](month) for a [10](days) trip?
     - I'm unsure about the best attractions and events to include in my itinerary for [Barcelona](place) in [nov](month) for a [7] trip. Are there any services available for itinerary planning during that time?
     - Who can I contact to get assistance with organizing my travel itinerary for [Seville](place) in [oct](month) for a [10](days) trip?
+    - Who can I contact to get assistance with organizing my travel itinerary for [Noth East India](place) in [October](month)?
     - [Feb](month)
     - month is [march](month)
     - month [Feb](month)
@@ -168,4 +172,19 @@ nlu:
     - oct
     - nov
     - dec
+
+- lookup: place
+  examples: |
+    - Agra
+    - Munnar
+    - Coorg
+    - Ooty
+    - Sikkim
+    - Shimla
+    - Varanasi
+    - Delhi
+    - Kolkata
+    - Amritsar
+    - Spain
+    - Italy
 

@@ -22,12 +22,6 @@ slots:
     mappings:
     - type: from_entity
       entity: month
-  query:
-    type: text
-    influence_conversation: true
-    mappings:
-    - type: from_entity
-      entity: query
   place:
     type: text
     influence_conversation: true
