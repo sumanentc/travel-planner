@@ -30,7 +30,7 @@ Overall, the travel planner app aims to simplify the process of itinerary creati
 - Clone the repository
 
   ```
-  git clone https://github.com/sumanentc/COVID-19-bot.git
+  git clone https://github.com/sumanentc/travel-planner.git
   ```
 
 - Using RASA Shell and Stand alone Action Server

@@ -11,7 +11,7 @@ rasax:
   token: "Password123"
   # jwtSecret which is used to sign the jwtTokens of the users
   jwtSecret: "Password123"
-  tag: "0.42.0"
+  tag: "1.0.0"
 # rasa: Settings common for all Rasa containers
 rasa:
   # token Rasa accepts as authentication token from other Rasa services
