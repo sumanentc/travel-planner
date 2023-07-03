@@ -1,0 +1,137 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - mood_great
+  - mood_unhappy
+  - travel_itinerary
+
+entities:
+  - month
+  - place
+  - days
+  - theme
+
+slots:
+  month:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: month
+  query:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: query
+  place:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: place
+  theme:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: theme
+  days:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: days
+
+forms:
+  travel_info_form:
+    required_slots:
+      - month
+      - place
+      - days
+
+responses:
+  utter_greet:
+    - text: Hello! Let me know how may i help you?
+    - text: Hey!! Let me know how may i help you?
+    - text: Wassup? Let me know how may i help you?
+    - text: Hey! Let me know how may i help you?
+  utter_mood_great:
+    - text: Super!
+    - text: I am great.
+    - text: Amazing
+    - text: nice
+  utter_welcome:
+    - text: "Welcome ..I am your Travel assistant bot!!!,
+           you can ask travel related quires ..."
+  utter_cheer_up:
+  - text: "Here is something to cheer you up:"
+    image: "https://i.imgur.com/nGF1K8f.jpg"
+
+  utter_did_that_help:
+  - text: "Did that help you?"
+
+  utter_happy:
+  - text: "Great, carry on!"
+  - text: "Thank you"
+  - text: "Welcome"
+
+  utter_goodbye:
+  - text: "Bye"
+
+  utter_iamabot:
+  - text: "I am a bot, powered by Rasa."
+
+  utter_ask_month:
+  - text: "In which month would you like to travel"
+  - text: "Can you please let me know the month of your travel"
+
+  utter_ask_place:
+  - text: "where would you like to go"
+  - text: "Do you have any preferred location"
+
+  utter_ask_days:
+    - text: "For how many days you want to travel?"
+    - text: "Days for which you want this vacation?"
+
+  utter_ask_question:
+  - text: "Let me know how may i help you?"
+
+  utter_ask_rephrase:
+  - text: "I'm sorry, I didn't quite understand that and would you rephrase it?"
+
+  utter_does_help:
+  - text: Did that help you?
+    buttons:
+      - title: Yes
+        payload: /affirm
+      - title: No
+        payload: /deny
+      - title: continue
+        payload: /slot_reset
+  utter_entry:
+  - text: Welcome to AI chatbot..!!
+  utter_ask_again:
+  - text: How may i help you?
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+
+actions:
+  - utter_ask_month
+  - utter_goodbye
+  - utter_greet
+  - utter_ask_place
+  - utter_ask_question
+  - utter_does_help
+  - utter_entry
+  - utter_ask_again
+  - utter_mood_great
+  - utter_welcome
+  - validate_travel_info_form
+  - travel_itinerary_action

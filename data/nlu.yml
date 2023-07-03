@@ -1,0 +1,171 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+
+- intent: goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+
+- intent: deny
+  examples: |
+    - no
+    - n
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+
+- intent: mood_great
+  examples: |
+    - perfect
+    - great
+    - amazing
+    - feeling like a king
+    - wonderful
+    - I am feeling very good
+    - I am great
+    - I am amazing
+    - I am going to save the world
+    - super stoked
+    - extremely good
+    - so so perfect
+    - so good
+    - so perfect
+
+- intent: mood_unhappy
+  examples: |
+    - my day was horrible
+    - I am sad
+    - I don't feel very well
+    - I am disappointed
+    - super sad
+    - I'm so sad
+    - sad
+    - very sad
+    - unhappy
+    - not good
+    - not very good
+    - extremly sad
+    - so saad
+    - so sad
+- intent: travel_itinerary
+  examples: |
+    - I am looking for a travel destination that has [sunny sandy beaches](theme), [beautiful views](theme) all around the city, and an [overall party](theme) and relaxing vibe.
+    - can you suggest me some places around the [world](place) in the month of [Jan](month)
+    - suggest me some places in [india](place) in the month of [Dec](month)
+    - recommend some places in [Turkey](place).
+    - plan a trip to [goa](place)
+    - help me with a trip itenary for [egypt](place)
+    - trip to [himachal](place) in [june](month)
+    - Can you assist me with planning my travel itinerary for the month of [december](month)?
+    - I need help creating a detailed travel plan. Can you provide any guidance?
+    - I'm looking for recommendations and suggestions for my upcoming trip. Can you help me with my itinerary
+    - I'm feeling overwhelmed with organizing my travel schedule. Is there someone who can provide me with itinerary assistance
+    - I'm seeking assistance in mapping out my travel plans. Can you point me in the right direction
+    - I would appreciate some help in creating a comprehensive travel itinerary. Any suggestions
+    - I'm in need of expert advice for planning my travel schedule. How can I get itinerary help?
+    - Where can I find resources or professionals who can assist me in developing a detailed travel itinerary?
+    - I'm unsure about the best way to plan my trip. Are there any services available for itinerary planning?
+    - Who can I contact to get assistance with organizing my travel itinerary
+    - I'm planning a trip to [kerala](place). Can you provide some assistance with creating an itinerary?
+    - I need help organizing my travel plans for my upcoming trip to [goa](place). Can you offer any guidance?
+    - I'm looking for recommendations and suggestions for things to do in [thailand](place). Can you help me create an itinerary?
+    - I'm feeling overwhelmed with planning my activities in [kashmir](place). Is there someone who can assist me with my itinerary?
+    - I'm seeking assistance in mapping out my travel plans for [himachal](place). Can you provide any recommendations?
+    - I would appreciate some help in creating a detailed itinerary for my trip to [andaman](place). Any suggestions?
+    - I'm in need of expert advice for planning my activities in [ladakh](place). How can I get itinerary help specific to that location?
+    - Where can I find resources or professionals who can assist me in developing a travel itinerary for [Europe](place)?
+    - I'm unsure about the best attractions and sights to include in my itinerary for [Dubai](place). Are there any services available for itinerary planning?
+    - Who can I contact to get assistance with organizing my travel itinerary for [Mauritius](place)?
+    - I'm planning a trip to [Singapore](place). Can you provide some assistance with creating an itinerary?
+    - I would appreciate some help in creating a detailed itinerary for my trip to [Maldives](place). Any suggestions?
+    - I would appreciate some help in creating a detailed itinerary for my trip to [Australia](place). Any suggestions?
+    - I'm planning a trip to [Turkey](place) in [april](jan). Can you provide some assistance with creating an itinerary?
+    - I need help organizing my travel plans for my trip to [Australia](month) in [feb](month). Can you offer any guidance?
+    - I'm looking for recommendations and suggestions for things to do in [Bali](place) during [march](month). Can you help me create an itinerary?
+    - I'm feeling overwhelmed with planning my activities in [Singapore](place) for [april](month). Is there someone who can assist me with my itinerary?
+    - I'm seeking assistance in mapping out my travel plans for [Vietnam](place) in [may](month). Can you provide any recommendations?
+    - I would appreciate some help in creating a detailed itinerary for my trip to [Uttarakhand](place) in [june](month). Any suggestions?
+    - I'm in need of expert advice for planning my activities in [South Africa] during [july](month). How can I get itinerary help specific to that time of year?
+    - Where can I find resources or professionals who can assist me in developing a travel itinerary for [Egypt](place) in [august](month)?
+    - I'm unsure about the best attractions and sights to include in my itinerary for [Egypt](place) in [sept](month). Are there any services available for itinerary planning during that time?
+    - Who can I contact to get assistance with organizing my travel itinerary for [rajasthan](place) in [oct](month)?
+    - I need help organizing my travel plans for my trip to [Australia](month) in [nov](month). Can you offer any guidance?
+    - I'm planning a trip to [Thailand](place) in [jan](month) for [5](days). Can you provide some assistance with creating an itinerary?
+    - I need help organizing my travel plans for [Goa](place) in [nov](month) for a [4](days) trip. Can you offer any guidance?
+    - I'm looking for recommendations and suggestions for things to do in [Srilanka](place) during [dec](month) for a [7](days) trip. Can you help me create an itinerary?
+    - I'm feeling overwhelmed with planning my activities in [maharashtra](place) for [feb](month) for a [10](days) trip. Is there someone who can assist me with my itinerary?
+    - I'm seeking assistance in mapping out my travel plans for [Andaman](place) in [july](month) for a [7](days) trip. Can you provide any recommendations?
+    - I would appreciate some help in creating a detailed itinerary for my [10](days) trip to [Paris](place) in [jan](month). Any suggestions?
+    - I would appreciate some help in creating a detailed itinerary for my [5](days) trip to [Agra](place) in [jan](month). Any suggestions?
+    - I'm in need of expert advice for planning my activities in [Amsterdam](place) during [feb](month) for a [10](days) trip. How can I get itinerary help specific to that location and time frame?
+    - Where can I find resources or professionals who can assist me in developing a travel itinerary for [Venice] in [dec](month) for a [10](days) trip?
+    - I'm unsure about the best attractions and events to include in my itinerary for [Barcelona](place) in [nov](month) for a [7] trip. Are there any services available for itinerary planning during that time?
+    - Who can I contact to get assistance with organizing my travel itinerary for [Seville](place) in [oct](month) for a [10](days) trip?
+    - [Feb](month)
+    - month is [march](month)
+    - month [Feb](month)
+    - [Adventure](theme)
+    - [Wild life](theme)
+    - [wild escapes](theme)
+    - [honeymoon](theme)
+
+- lookup: month
+  examples: |
+    - january
+    - febrauary
+    - march
+    - april
+    - may
+    - june
+    - july
+    - august
+    - september
+    - october
+    - november
+    - december
+    - jan
+    - feb
+    - mar
+    - jun
+    - jul
+    - aug
+    - sep
+    - oct
+    - nov
+    - dec
+

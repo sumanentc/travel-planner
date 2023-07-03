@@ -1,0 +1,22 @@
+version: "3.1"
+
+stories:
+
+- story: travel path
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: travel_itinerary
+  - action: travel_info_form
+  - active_loop: travel_info_form
+  - slot_was_set:
+      - requested_slot: month
+  - slot_was_set:
+      - requested_slot: days
+  - slot_was_set:
+      - requested_slot: place
+  - slot_was_set:
+      - requested_slot: null
+  - active_loop: null
+  - action: travel_itinerary_action
+

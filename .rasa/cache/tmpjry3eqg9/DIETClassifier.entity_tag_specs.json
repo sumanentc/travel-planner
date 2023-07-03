@@ -1,0 +1,52 @@
+[
+  {
+    "tag_name": "entity",
+    "ids_to_tags": {
+      "1": "B-days",
+      "2": "I-days",
+      "3": "L-days",
+      "4": "U-days",
+      "5": "B-jan",
+      "6": "I-jan",
+      "7": "L-jan",
+      "8": "U-jan",
+      "9": "B-month",
+      "10": "I-month",
+      "11": "L-month",
+      "12": "U-month",
+      "13": "B-place",
+      "14": "I-place",
+      "15": "L-place",
+      "16": "U-place",
+      "17": "B-theme",
+      "18": "I-theme",
+      "19": "L-theme",
+      "20": "U-theme",
+      "0": "O"
+    },
+    "tags_to_ids": {
+      "B-days": 1,
+      "I-days": 2,
+      "L-days": 3,
+      "U-days": 4,
+      "B-jan": 5,
+      "I-jan": 6,
+      "L-jan": 7,
+      "U-jan": 8,
+      "B-month": 9,
+      "I-month": 10,
+      "L-month": 11,
+      "U-month": 12,
+      "B-place": 13,
+      "I-place": 14,
+      "L-place": 15,
+      "U-place": 16,
+      "B-theme": 17,
+      "I-theme": 18,
+      "L-theme": 19,
+      "U-theme": 20,
+      "O": 0
+    },
+    "num_tags": 21
+  }
+]
