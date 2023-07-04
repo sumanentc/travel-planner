@@ -3,8 +3,9 @@
 The travel planner application is designed to assist users in creating and organizing their travel itineraries. With this intuitive and user-friendly app, users can easily plan their trips, whether for business or leisure purposes.
 
 Key features of the travel planner app include:
+* Destination Recommendation: Users can discover perfect travel destination based on their preferences and interests.
 * Itinerary Creation: Users can create detailed itineraries by inputting their destination, travel dates, and duration of the trip.
-* Context based recommendation: App will provide recommendation based on past context.
+* Context based Recommendation: Users will get personalized travel recommendations tailored to their specific context and preferences.
 
 Overall, the travel planner app aims to simplify the process of itinerary creation, enhance travel organization, and provide users with a seamless and enjoyable travel planning experience.
 
@@ -13,8 +14,9 @@ Overall, the travel planner app aims to simplify the process of itinerary creati
 - [Rasa : 3.5.2 ](https://rasa.com/docs/rasa/)
 - [Python : 3.9 ](https://www.python.org/)
 - [Rasa-SDK Action Server : 3.5.1 ](https://rasa.com/docs/action-server)
-- [RASA-X :0.38.1](https://rasa.com/docs/rasa-x/)
-- [Requests-cache](https://requests-cache.readthedocs.io/en/latest/user_guide.html)
+- [RASA-X :1.0.0](https://rasa.com/docs/rasa-x/)
+- [LangChain](https://python.langchain.com/docs/get_started/introduction.html)
+- [ChatGPT](https://openai.com/blog/chatgpt)
 
 ## Getting Started
 

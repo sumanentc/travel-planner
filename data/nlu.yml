@@ -85,7 +85,6 @@ nlu:
 - intent: travel_itinerary
   examples: |
     - I am looking for a travel destination that has [sunny sandy beaches](theme), [beautiful views](theme) all around the city, and an [overall party](theme) and relaxing vibe.
-    - can you suggest me some places around the [world](place) in the month of [Jan](month)
     - suggest me some places in [india](place) in the month of [Dec](month)
     - recommend some places in [Turkey](place).
     - plan a trip to [goa](place)
@@ -140,6 +139,7 @@ nlu:
     - I'm unsure about the best attractions and events to include in my itinerary for [Barcelona](place) in [nov](month) for a [7] trip. Are there any services available for itinerary planning during that time?
     - Who can I contact to get assistance with organizing my travel itinerary for [Seville](place) in [oct](month) for a [10](days) trip?
     - Who can I contact to get assistance with organizing my travel itinerary for [Noth East India](place) in [October](month)?
+    - I would appreciate some help in creating a detailed itinerary for my [10](days) trip to [Spain](place) in [January](month). Any suggestions?
     - [Feb](month)
     - month is [march](month)
     - month [Feb](month)
@@ -147,6 +147,39 @@ nlu:
     - [Wild life](theme)
     - [wild escapes](theme)
     - [honeymoon](theme)
+
+- intent: travel_query
+  examples: |
+    - places to visit in [dec](month) in [India](place)
+    - Places to visit in the month of [December](month) in India
+    - Places to visit in the month of [December](month) in Europe
+    - Plan a trip in the month of [July](month)
+    - Plan a trip in [July](month)
+    - Suggest me some places in the month of [dec](month) in Australia
+    - can you suggest me some places around the [world](place) in the month of [Jan](month)
+    - Which travel destinations are recommended for [January](month) in Europe?
+    - What are some popular travel destinations during [Feb](month)?
+    - I'm planning a trip in [March](month). Can you suggest some great destinations?
+    - What are the top travel destinations to visit in [Apr](month)?
+    - Which places are ideal for travel in [May](month)?
+    - Can you recommend some must-visit destinations during [June](month)?
+    - I'm looking for travel ideas for [July](month). Any suggestions on where to go?
+    - What are the best destinations to explore during [August](month)?
+    - Which countries/cities offer the best travel experiences in [Sept](month)?
+    - I'd like to know about travel destinations that are particularly enjoyable in [October](month). Any recommendations?
+    - What are some travel destinations known for their stunning [beaches](theme)?
+    - Which destinations are popular among [adventure](theme) seekers?
+    - Can you suggest travel destinations that offer a rich [historical](theme) and cultural experience?
+    - I'm interested in exploring natural wonders. What are some destinations known for their breathtaking [landscapes](theme)?
+    - Which cities are renowned for their vibrant [nightlife](theme) and entertainment options?
+    - What are some family-friendly travel destinations with plenty of activities for [kids](theme)?
+    - I love exploring local cuisine. Can you recommend travel destinations known for their [food](theme) culture?
+    - Which destinations are ideal for [relaxation](theme) and spa retreats?
+    - I'm a nature lover. Can you suggest travel destinations that offer great opportunities for hiking and [wildlife](theme) spotting?
+    - What are some off-the-beaten-path travel destinations that are perfect for [adventurous](theme) travelers seeking unique experiences?
+    - Which destinations are popular among [mountain](theme) seekers?
+    - Can you suggest travel destinations that offer a [snow](theme) experience in India?
+    - Which destinations are popular for [honeymoon](theme) ?
 
 - lookup: month
   examples: |

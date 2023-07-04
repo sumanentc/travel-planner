@@ -8,6 +8,7 @@ intents:
   - mood_great
   - mood_unhappy
   - travel_itinerary
+  - travel_query
 
 entities:
   - month
@@ -54,6 +55,10 @@ responses:
     - text: Hey!! Let me know how may i help you?
     - text: Wassup? Let me know how may i help you?
     - text: Hey! Let me know how may i help you?
+    - text: Hey, what's going on? How can I assist you?
+    - text: Hey, what's up? Let me know if there's anything I can do to assist you.
+    - text: Hey there! How may I help you? Feel free to let me know.
+    - text: Hello! How can I be of assistance? Let me know.
   utter_mood_great:
     - text: Super!
     - text: I am great.
@@ -129,3 +134,4 @@ actions:
   - utter_welcome
   - validate_travel_info_form
   - travel_itinerary_action
+  - travel_query_action

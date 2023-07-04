@@ -11,7 +11,7 @@ from typing import Any, Text, Dict, List, Union
 
 import langchain
 from langchain import LLMChain
-from langchain.agents import initialize_agent, AgentType, AgentOutputParser, LLMSingleActionAgent, AgentExecutor
+from langchain.agents import AgentOutputParser, LLMSingleActionAgent, AgentExecutor
 from langchain.cache import SQLiteCache
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import BaseChatPromptTemplate
@@ -33,7 +33,7 @@ class TravelItineraryAction(Action):
         selected_month = tracker.get_slot('month')
         selected_place = tracker.get_slot('place')
         selected_days = tracker.get_slot('days')
-        print('Inside Custom Action')
+        print('Inside TravelItineraryAction')
         print(selected_month)
         print(selected_place)
         print(selected_days)
@@ -44,7 +44,35 @@ class TravelItineraryAction(Action):
         if not selected_days:
             return dispatcher.utter_message(text="For how many days you would like to travel?")
         latest_message = f"I'm looking for recommendations and suggestions for things to do in destination {selected_place} during {selected_month} month for a {selected_days} days trip. Can you help me create an itinerary?"
-        prompt = get_prompt(latest_message)
+        prompt = get_itinerary_prompt(latest_message)
+        message = get_itinerary(prompt)
+        # print(message)
+        dispatcher.utter_message(text=message)
+        return []
+
+
+class TravelQueryAction(Action):
+
+    def name(self) -> Text:
+        return "travel_query_action"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        selected_month = tracker.get_slot('month')
+        selected_theme = tracker.get_slot('theme')
+        print('Inside TravelQueryAction')
+        print(selected_month)
+        print(selected_theme)
+        inp_message = tracker.latest_message['text']
+        print(inp_message)
+        latest_message = (
+            f"I'm looking for recommendations and suggestions for a travel destination." + f"During the month of {selected_month}"
+            if selected_month
+            else ""
+            + f" Please make sure the travel destination has {selected_theme}." if selected_theme else ""
+        )
+        prompt = get_query_prompt(inp_message)
         message = get_itinerary(prompt)
         # print(message)
         dispatcher.utter_message(text=message)
@@ -100,6 +128,7 @@ class CustomOutputParser(AgentOutputParser):
         # If it can't parse the output it raises an error
         # You can add your own logic here to handle errors in a different way i.e. pass to a human, give a canned response
         if not match:
+            print(llm_output)
             return AgentFinish(
                 # Return values is generally always a dictionary with a single `output` key
                 # It is not recommended to try anything else at the moment :)
@@ -183,7 +212,7 @@ def get_itinerary(input: str):
     return agent_response
 
 
-def get_prompt(user_input: str):
+def get_itinerary_prompt(user_input: str):
     prompt = f"""
     - You are an expert travel planner.
     - Your task is to extract relevant information from the UserInput below, delimited by triple backticks and help me prepare a travel itinerary.
@@ -195,6 +224,25 @@ def get_prompt(user_input: str):
     - Don't mention Based on the UserInput in the response
     - Don't mention As an expert travel planner in the response
     - Don't specify Yes, I can help you create an itinerary in the response
+    - Don't specify Based on the user input in the response
+    - Present the output in raw markdown for javascript format
+    UserInput: ```{user_input}```
+    """
+    return prompt
+
+
+def get_query_prompt(user_input: str):
+    prompt = f"""
+    - You are an expert travel planner.
+    - Your task is to extract relevant information from the UserInput below, delimited by triple backticks and help me prepare a travel destination recommendation.
+    - Provide 2 to 3 travel destination suggestions.
+    - Please consider the user preference such as month of travel, themes and any other preferences provided in the context.
+    - The output should be in raw markdown for javascript format in Paragraph style.
+    - Don't mention based on the user input in the response.
+    - Don't mention Based on the UserInput in the response
+    - Don't mention As an expert travel planner in the response
+    - Don't specify Yes, I can help you in the response
+    - Don't specify Based on the user input in the response
     - Present the output in raw markdown for javascript format
     UserInput: ```{user_input}```
     """

@@ -5,13 +5,13 @@ name = "pypi"
 
 [packages]
 rasa = "==3.5.2"
-#websockets = "==10.0"
 langchain = "==0.0.220"
 duckduckgo-search = "*"
 typing-inspect = "==0.8.0"
 typing_extensions = "==4.5.0"
 openai = "*"
 colorama = "*"
+questionary= "==1.5.1"
 
 [dev-packages]
 
