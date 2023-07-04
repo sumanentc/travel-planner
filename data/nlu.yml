@@ -65,6 +65,15 @@ nlu:
     - so so perfect
     - so good
     - so perfect
+    - that was really good
+    - That was excellent!
+    - That was truly impressive!
+    - I must say, that was fantastic!
+    - It was outstanding!
+    - Wow, that was superb!
+    - You did a fantastic job!
+    - That was top-notch!
+    - I'm really impressed, that was remarkable!
 
 - intent: mood_unhappy
   examples: |
@@ -85,8 +94,6 @@ nlu:
 - intent: travel_itinerary
   examples: |
     - I am looking for a travel destination that has [sunny sandy beaches](theme), [beautiful views](theme) all around the city, and an [overall party](theme) and relaxing vibe.
-    - suggest me some places in [india](place) in the month of [Dec](month)
-    - recommend some places in [Turkey](place).
     - plan a trip to [goa](place)
     - help me with a trip itenary for [egypt](place)
     - trip to [himachal](place) in [june](month)
@@ -114,7 +121,7 @@ nlu:
     - I would appreciate some help in creating a detailed itinerary for my trip to [Maldives](place). Any suggestions?
     - I would appreciate some help in creating a detailed itinerary for my trip to [Australia](place). Any suggestions?
     - I'm planning a trip to [Turkey](place) in [april](month). Can you provide some assistance with creating an itinerary?
-    - I need help organizing my travel plans for my trip to [Australia](place) in [feb](month). Can you offer any guidance?
+    - I need help organizing my travel plans for my trip to [Italy](place) in [feb](month). Can you offer any guidance?
     - I need help organizing my travel plans for my trip to [Australia](place) in [January](month). Can you offer any guidance?
     - I need help organizing my travel plans for my trip to [Australia](place) in [March](month). Can you offer any guidance?
     - I'm looking for recommendations and suggestions for things to do in [Bali](place) during [march](month). Can you help me create an itinerary?
@@ -150,11 +157,16 @@ nlu:
 
 - intent: travel_query
   examples: |
+    - suggest me some places in [india](place) in the month of [Dec](month)
+    - recommend some places in [Turkey](place).
     - places to visit in [dec](month) in [India](place)
     - Places to visit in the month of [December](month) in India
     - Places to visit in the month of [December](month) in Europe
     - Plan a trip in the month of [July](month)
     - Plan a trip in [July](month)
+    - Recommend some place in the month of [Jan](month)?
+    - Can you suggest me some place in India?
+    - Can you suggest me some place ?
     - Suggest me some places in the month of [dec](month) in Australia
     - can you suggest me some places around the [world](place) in the month of [Jan](month)
     - Which travel destinations are recommended for [January](month) in Europe?

@@ -7,6 +7,8 @@ intents:
   - deny
   - mood_great
   - mood_unhappy
+  - slot_reset
+  - continue
   - travel_itinerary
   - travel_query
 
@@ -61,15 +63,26 @@ responses:
     - text: Hello! How can I be of assistance? Let me know.
   utter_mood_great:
     - text: Super!
-    - text: I am great.
     - text: Amazing
-    - text: nice
+    - text: Nice
   utter_welcome:
     - text: "Welcome ..I am your Travel assistant bot!!!,
            you can ask travel related quires ..."
   utter_cheer_up:
   - text: "Here is something to cheer you up:"
     image: "https://i.imgur.com/nGF1K8f.jpg"
+
+  utter_continue:
+  - text: How may I be of assistance to you? Please let me know
+  - text: In what way can I assist you? Please feel free to share your needs or questions.
+
+  utter_do_you_have_question:
+    - text: "Is there anything else you require assistance with?"
+      buttons:
+        - title: Yes
+          payload: /continue
+        - title: No
+          payload: /goodbye
 
   utter_did_that_help:
   - text: "Did that help you?"
@@ -81,6 +94,9 @@ responses:
 
   utter_goodbye:
   - text: "Bye"
+  - text: "Take care"
+  - text: "Goodbye for now"
+  - text: "Catch you later"
 
   utter_iamabot:
   - text: "I am a bot, powered by Rasa."
@@ -118,20 +134,22 @@ responses:
   - text: How may i help you?
 
 session_config:
-  session_expiration_time: 60
+  session_expiration_time: 120
   carry_over_slots_to_new_session: true
 
 actions:
-  - utter_ask_month
   - utter_goodbye
   - utter_greet
-  - utter_ask_place
   - utter_ask_question
   - utter_does_help
   - utter_entry
   - utter_ask_again
   - utter_mood_great
   - utter_welcome
+  - utter_do_you_have_question
+  - utter_continue
+  - utter_ask_place
+  - utter_ask_month
   - validate_travel_info_form
   - travel_itinerary_action
   - travel_query_action

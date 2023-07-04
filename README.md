@@ -1,8 +1,10 @@
-## Travel Planner Bot
+## RoamWise Travel Planner
 
-The travel planner application is designed to assist users in creating and organizing their travel itineraries. With this intuitive and user-friendly app, users can easily plan their trips, whether for business or leisure purposes.
+RoamWise is a travel planning application designed to enhance your exploration and make your journeys more seamless. With RoamWise, you can unlock the full potential of your travels by providing intelligent recommendations, comprehensive itineraries, and convenient travel management tools.
 
-Key features of the travel planner app include:
+Discover new destinations and hidden gems tailored to your preferences, interests, and travel style. RoamWise combines advanced algorithms with curated travel content to offer personalized recommendations that suit your individual tastes. Whether you're an adventure seeker, a food enthusiast, a history buff, or simply looking to unwind, RoamWise ensures your travel experiences align with your desires.
+
+Key features RoamWise include:
 * Destination Recommendation: Users can discover perfect travel destination based on their preferences and interests.
 * Itinerary Creation: Users can create detailed itineraries by inputting their destination, travel dates, and duration of the trip.
 * Context based Recommendation: Users will get personalized travel recommendations tailored to their specific context and preferences.
