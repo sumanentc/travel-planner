@@ -1,4 +1,7 @@
 ## RoamWise Travel Planner
+Introducing RoamWise, the revolutionary travel planner app powered by cutting-edge generative AI technology.
+
+![RoamWise](./images/roamWise.jpg)
 
 RoamWise is a travel planning application designed to enhance your exploration and make your journeys more seamless. With RoamWise, you can unlock the full potential of your travels by providing intelligent recommendations, comprehensive itineraries, and convenient travel management tools.
 
@@ -51,22 +54,23 @@ Overall, the travel planner app aims to simplify the process of itinerary creati
 2. Train the model
 
   ```
-  rasa train
+  rasa train --force
 
   ```
 
 3. Start the Action Server
 
   ```
-  rasa run actions -vv
+  rasa run actions
 
   ```
 
 4. Start the RASA shell
 
   ```
-  rasa shell -v
+  rasa shell 
   ```
+![RASA-X ](./images/shell.png)
 
 5. Start asking questions on the RASA shell
 

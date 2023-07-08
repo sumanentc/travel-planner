@@ -6,8 +6,10 @@
 
 
 # This is a simple example for a custom action which utters "Hello World!"
+import json
 import re
 from typing import Any, Text, Dict, List, Union
+from rasa_sdk.events import SlotSet
 
 import langchain
 from langchain import LLMChain
@@ -15,14 +17,13 @@ from langchain.agents import AgentOutputParser, LLMSingleActionAgent, AgentExecu
 from langchain.cache import SQLiteCache
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import BaseChatPromptTemplate
-from langchain.schema import HumanMessage, AgentAction, AgentFinish
+from langchain.schema import HumanMessage, AgentAction, AgentFinish, SystemMessage
 from langchain.tools import DuckDuckGoSearchRun, Tool
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 
 
 class TravelItineraryAction(Action):
-
     def name(self) -> Text:
         return "travel_itinerary_action"
 
@@ -33,6 +34,7 @@ class TravelItineraryAction(Action):
         selected_month = tracker.get_slot('month')
         selected_place = tracker.get_slot('place')
         selected_days = tracker.get_slot('days')
+        inp_message = tracker.latest_message['text']
         print('Inside TravelItineraryAction')
         print(selected_month)
         print(selected_place)
@@ -43,39 +45,75 @@ class TravelItineraryAction(Action):
             return dispatcher.utter_message(text="where would you like to go?")
         if not selected_days:
             return dispatcher.utter_message(text="For how many days you would like to travel?")
-        latest_message = f"I'm looking for recommendations and suggestions for things to do in destination {selected_place} during {selected_month} month for a {selected_days} days trip. Can you help me create an itinerary?"
+        latest_message = f"I'm looking for recommendations and suggestions for things to do in destination {selected_place} during {selected_month} month for a {selected_days} days trip. {inp_message} Can you help me create an itinerary?"
         prompt = get_itinerary_prompt(latest_message)
         message = get_itinerary(prompt)
-        # print(message)
         dispatcher.utter_message(text=message)
         return []
 
 
 class TravelQueryAction(Action):
-
     def name(self) -> Text:
         return "travel_query_action"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        selected_month = tracker.get_slot('month')
-        selected_theme = tracker.get_slot('theme')
         print('Inside TravelQueryAction')
-        print(selected_month)
-        print(selected_theme)
         inp_message = tracker.latest_message['text']
-        print(inp_message)
-        latest_message = (
-            f"I'm looking for recommendations and suggestions for a travel destination." + f"During the month of {selected_month}"
-            if selected_month
-            else ""
-            + f" Please make sure the travel destination has {selected_theme}." if selected_theme else ""
-        )
-        prompt = get_query_prompt(inp_message)
-        message = get_itinerary(prompt)
-        # print(message)
-        dispatcher.utter_message(text=message)
+        #print(inp_message)
+        travel_check_prompt = get_travel_query_check_prompt(inp_message)
+        resp = run(travel_check_prompt)
+        print(resp)
+        if not resp['travel_query']:
+            dispatcher.utter_message(response='utter_please_rephrase')
+        else:
+            prompt = get_query_prompt(inp_message)
+            message = get_itinerary(prompt)
+            dispatcher.utter_message(text=message)
+        return []
+
+
+class ActionUnlikelyIntent(Action):
+    def name(self) -> Text:
+        return "action_unlikely_intent"
+
+    async def run(
+            self, dispatcher, tracker: Tracker, domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        print(tracker.latest_message)
+        print(tracker.slots)
+        current_intent = tracker.latest_message.get('intent')
+        if current_intent:
+            current_intent_name = current_intent.get('name')
+            print(current_intent_name)
+            user_input = tracker.latest_message.get('text')
+            requested_slot = tracker.slots.get('requested_slot')
+            if requested_slot:
+                if requested_slot == 'month':
+                    month_check_prompt = get_month_check_prompt(user_input)
+                    resp = run(month_check_prompt)
+                    if resp and not resp['valid_month']:
+                        dispatcher.utter_message(response='utter_please_rephrase')
+                elif requested_slot == 'place':
+                    place_check_prompt = get_place_check_prompt(user_input)
+                    resp = run(place_check_prompt)
+                    print(resp)
+                    if resp and not resp['valid_place']:
+                        dispatcher.utter_message(response='utter_please_rephrase')
+                    else:
+                        return [SlotSet("place", resp['place'])]
+                elif requested_slot == 'days':
+                    days_check_prompt = get_day_check_prompt(user_input)
+                    resp = run(days_check_prompt)
+                    if resp and not resp['valid_days']:
+                        dispatcher.utter_message(response='utter_please_rephrase')
+            else:
+                travel_check_prompt = get_travel_query_check_prompt(user_input)
+                resp = run(travel_check_prompt)
+                if not resp['travel_query']:
+                    dispatcher.utter_message(response='utter_please_rephrase')
+
         return []
 
 
@@ -122,19 +160,14 @@ class CustomOutputParser(AgentOutputParser):
             )
 
         # Parse out the action and action input
-        regex = r"Action: (.*?)[\n]*Action Input:[\s]*(.*)"
+        # regex = r"Action: (.*?)[\n]*Action Input:[\s]*(.*)"
+        regex = r"Action\s*\d*\s*:(.*?)\nAction\s*\d*\s*Input\s*\d*\s*:[\s]*(.*)"
         match = re.search(regex, llm_output, re.DOTALL)
 
         # If it can't parse the output it raises an error
         # You can add your own logic here to handle errors in a different way i.e. pass to a human, give a canned response
         if not match:
-            print(llm_output)
-            return AgentFinish(
-                # Return values is generally always a dictionary with a single `output` key
-                # It is not recommended to try anything else at the moment :)
-                return_values={"output": llm_output.split("Final Answer:")[-1].strip()},
-                log=llm_output,
-            )
+            raise ValueError(f"Could not parse LLM output: `{llm_output}`")
         action = match.group(1).strip()
         action_input = match.group(2)
 
@@ -147,6 +180,21 @@ def search_general(input_text):
     return search
 
 
+def search_online(input_text):
+    search = DuckDuckGoSearchRun().run(f"site:tripadvisor.com things to do{input_text}")
+    return search
+
+
+def search_hotel(input_text):
+    search = DuckDuckGoSearchRun().run(f"site:booking.com {input_text}")
+    return search
+
+
+def search_flight(input_text):
+    search = DuckDuckGoSearchRun().run(f"site:skyscanner.com {input_text}")
+    return search
+
+
 def get_itinerary(input: str):
     llm = ChatOpenAI(temperature=0, model_name='gpt-3.5-turbo-16k')
     langchain.llm_cache = SQLiteCache(database_path=".langchain.db")
@@ -155,6 +203,21 @@ def get_itinerary(input: str):
             name="Search the internet",
             func=search_general,
             description="useful for when you need to search some information that is missing or you are not able to understand",
+        ),
+        Tool(
+            name="Search tripadvisor",
+            func=search_online,
+            description="useful for when you need to answer trip plan questions"
+        ),
+        Tool(
+            name="Search hotels",
+            func=search_hotel,
+            description="useful for when you need to answer hotel related questions"
+        ),
+        Tool(
+            name="Search flight",
+            func=search_flight,
+            description="useful for when you need to answer flight questions"
         )
     ]
 
@@ -165,14 +228,20 @@ def get_itinerary(input: str):
     {tools}
     
     Use the following format:
-    Thought: Do I need to use a tool? Yes
     Question: the input question you must answer
-    Action: the action to take, should be one of [{tool_names}]
-    Action Input: the input to the action
+    
+    When you have a response to say to the Human, or if you need to use a tool, you MUST use the following format(the prefix of "Thought: ", "Action: ", "Action Input: " and "Observation: " must be included):
+    
+    Thought: Do I need to use a tool? Yes
+    Action: Choose one of the available tools in [{tool_names}] for your action
+    Action Input: Provide the input required for the chosen tool
     Observation: the result of the action
+    ... (this Thought/Action/Action Input/Observation can repeat N times)
+    
+    When you have a response to say to the Human, or if you do not need to use a tool, you MUST use the following format(the prefix of "Thought: " and "Final Answer: " are must be included):
 
     Thought: Do I need to use a tool? No
-    Final Answer: the final answer to the original input question
+    Final Answer: [your response here]
     
     Begin! Remember to speak as a passionate and an expert travel planner when giving your final answer.
     
@@ -200,14 +269,18 @@ def get_itinerary(input: str):
         output_parser=output_parser,
         # We use "Observation" as our stop sequence so it will stop when it receives Tool output
         # If you change your prompt template you'll need to adjust this as well
-        stop=["\nObservation:", "\nFinal Answer:"],
+        stop=["\nObservation:"],
         allowed_tools=tool_names
     )
 
     # Initiate the agent that will respond to our queries
     # Set verbose=True to share the CoT reasoning the LLM goes through
-    agent_executor = AgentExecutor.from_agent_and_tools(agent=agent, tools=tools, verbose=False)
-    agent_response = agent_executor.run(input)
+    agent_executor = AgentExecutor.from_agent_and_tools(agent=agent, tools=tools, verbose=True)
+    try:
+        agent_response = agent_executor.run(input)
+    except Exception as e:
+        print(e)
+        agent_response = "Sorry, Couldn't help you at this moment. Please try sometime later"
     print("Got the result from OpenAI")
     return agent_response
 
@@ -223,8 +296,9 @@ def get_itinerary_prompt(user_input: str):
     - Don't mention based on the user input in the response.
     - Don't mention Based on the UserInput in the response
     - Don't mention As an expert travel planner in the response
-    - Don't specify Yes, I can help you create an itinerary in the response
-    - Don't specify Based on the user input in the response
+    - Don't mention Yes, I can help you create an itinerary in the response
+    - Don't mention Based on the user input in the response
+    - Don't mention Based on your input, in the response
     - Present the output in raw markdown for javascript format
     UserInput: ```{user_input}```
     """
@@ -241,9 +315,95 @@ def get_query_prompt(user_input: str):
     - Don't mention based on the user input in the response.
     - Don't mention Based on the UserInput in the response
     - Don't mention As an expert travel planner in the response
-    - Don't specify Yes, I can help you in the response
-    - Don't specify Based on the user input in the response
+    - Don't mention Based on the user's preference in the response
+    - Don't mention Yes, I can help you in the response
+    - Don't mention Based on the user input in the response
+    - Don't mention Based on your input, in the response
     - Present the output in raw markdown for javascript format
     UserInput: ```{user_input}```
     """
     return prompt
+
+
+def get_month_check_prompt(user_input: str):
+    return f"""
+                Identify the following items from the Input Text: 
+                - is there a valid month in the input text ? (True or False)
+                - Is the input query related to travel enquiry ? (True or False)
+                
+                Input Text is delimited with <>. \
+                Format your response as a JSON object with \
+                "valid_month" and "travel_query" as the keys.
+                If the information isn't present, use "None" \
+                as the value.
+                Make your response as short as possible.
+                Format the valid_month and  travel_query value as a boolean.
+                Input Text: <{user_input}>
+                """
+
+
+def get_place_check_prompt(user_input: str):
+    return f"""
+                Identify the following items from the Input Text: 
+                - is there a valid place on the world present in the input text ? (True or False)
+                - extract valid place name from input text ? (string or None)
+                
+                Input Text is delimited with <>. \
+                Format your response as a JSON object with \
+                "valid_place" and "place" as the keys.
+                If the information isn't present, use "None" \
+                as the value.
+                Make your response as short as possible.
+                Format the valid_place value as a boolean.
+                Input Text: <{user_input}>
+                """
+
+
+def get_day_check_prompt(user_input: str):
+    return f"""
+                Identify the following items from the Input Text: 
+                - is there a valid number of days in the input text ? True or False)
+                
+                Input Text is delimited with <>. \
+                Format your response as a JSON object with \
+                "valid_days" as the key.
+                If the information isn't present, use "None" \
+                as the value.
+                Make your response as short as possible.
+                Format the valid_days as a boolean.
+                Input Text: <{user_input}>
+                """
+
+
+def get_travel_query_check_prompt(user_input: str):
+    return f"""
+                Identify the following items from the Input Text: 
+                - Is the input query related to travel ? (True or False)
+                Input Text is delimited with <>. \
+                Format your response as a JSON object with \
+                "travel_query" as the key.
+                If the information isn't present, use "None" \
+                as the value.
+                Make your response as short as possible.
+                Format the travel_query value as a boolean.
+                Input Text: <{user_input}>
+                """
+
+
+def run(prompt: str):
+    llm = ChatOpenAI(temperature=0, model_name='gpt-3.5-turbo-16k')
+    langchain.llm_cache = SQLiteCache(database_path=".langchain.db")
+    messages = [
+        SystemMessage(
+            content="You are a helpful assistant."
+        ),
+        HumanMessage(
+            content=prompt
+        ),
+    ]
+    try:
+        response = llm(messages)
+    except Exception as e:
+        print(e)
+        return json.loads("")
+    return json.loads(response.content)

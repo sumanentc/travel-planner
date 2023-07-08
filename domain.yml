@@ -4,13 +4,14 @@ intents:
   - greet
   - goodbye
   - affirm
+  - continue
   - deny
   - mood_great
   - mood_unhappy
   - slot_reset
-  - continue
   - travel_itinerary
   - travel_query
+  - please_rephrase
 
 entities:
   - month
@@ -19,37 +20,35 @@ entities:
   - theme
 
 slots:
-  month:
-    type: text
-    influence_conversation: true
-    mappings:
-    - type: from_entity
-      entity: month
   place:
     type: text
     influence_conversation: true
     mappings:
     - type: from_entity
       entity: place
-  theme:
+  month:
     type: text
     influence_conversation: true
     mappings:
-    - type: from_entity
-      entity: theme
+      - type: from_entity
+        entity: month
   days:
     type: text
     influence_conversation: true
     mappings:
+      - type: from_entity
+        entity: days
+  theme:
+    type: text
+    mappings:
     - type: from_entity
-      entity: days
-
+      entity: theme
 forms:
   travel_info_form:
     required_slots:
-      - month
-      - place
-      - days
+    - place
+    - month
+    - days
 
 responses:
   utter_greet:
@@ -73,8 +72,8 @@ responses:
     image: "https://i.imgur.com/nGF1K8f.jpg"
 
   utter_continue:
-  - text: How may I be of assistance to you? Please let me know
-  - text: In what way can I assist you? Please feel free to share your needs or questions.
+    - text: "How may I be of assistance to you? Please let me know"
+    - text: "In what way can I assist you? Please feel free to share your needs or questions."
 
   utter_do_you_have_question:
     - text: "Is there anything else you require assistance with?"
@@ -88,15 +87,15 @@ responses:
   - text: "Did that help you?"
 
   utter_happy:
-  - text: "Great, carry on!"
-  - text: "Thank you"
-  - text: "Welcome"
+    - text: "Great, carry on!"
+    - text: "Thank you"
+    - text: "Welcome"
 
   utter_goodbye:
-  - text: "Bye"
-  - text: "Take care"
-  - text: "Goodbye for now"
-  - text: "Catch you later"
+    - text: "Bye"
+    - text: "Take care"
+    - text: "Goodbye for now"
+    - text: "Catch you later"
 
   utter_iamabot:
   - text: "I am a bot, powered by Rasa."
@@ -111,45 +110,34 @@ responses:
 
   utter_ask_days:
     - text: "For how many days you want to travel?"
-    - text: "Days for which you want this vacation?"
+    - text: "How any days for which you want this vacation?"
 
   utter_ask_question:
   - text: "Let me know how may i help you?"
 
-  utter_ask_rephrase:
-  - text: "I'm sorry, I didn't quite understand that and would you rephrase it?"
-
-  utter_does_help:
-  - text: Did that help you?
-    buttons:
-      - title: Yes
-        payload: /affirm
-      - title: No
-        payload: /deny
-      - title: continue
-        payload: /slot_reset
+  utter_please_rephrase:
+  - text: "I'm sorry, I didn't quite understand your input"
   utter_entry:
-  - text: Welcome to AI chatbot..!!
-  utter_ask_again:
-  - text: How may i help you?
+  - text: Welcome to RoamWise, your travel partner..!!
 
 session_config:
-  session_expiration_time: 120
+  session_expiration_time: 60
   carry_over_slots_to_new_session: true
 
 actions:
   - utter_goodbye
   - utter_greet
+  - utter_continue
   - utter_ask_question
-  - utter_does_help
   - utter_entry
-  - utter_ask_again
   - utter_mood_great
+  - utter_please_rephrase
   - utter_welcome
   - utter_do_you_have_question
-  - utter_continue
   - utter_ask_place
   - utter_ask_month
-  - validate_travel_info_form
+  - utter_ask_days
+  - action_validate_slot_mappings
   - travel_itinerary_action
   - travel_query_action
+  - action_unlikely_intent
