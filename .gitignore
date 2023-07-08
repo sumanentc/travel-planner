@@ -45,5 +45,5 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 models/
-.rasa*
+.rasa/*
 .langchain*
