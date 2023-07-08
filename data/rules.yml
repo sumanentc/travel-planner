@@ -6,6 +6,26 @@ rules:
   steps:
   - intent: goodbye
   - action: utter_goodbye
+  - action: action_restart
+
+- rule: Let's continue anytime the user says continue
+  steps:
+    - intent: continue
+    - action: utter_continue
+
+- rule: Say thank you anytime the user acknowledge
+  steps:
+    - intent: mood_great
+    - action: utter_mood_great
+    - action: utter_do_you_have_question
+
+- rule: Ask the user to rephrase whenever they send a message with low NLU confidence
+  steps:
+    - intent: nlu_fallback
+    - action: action_unlikely_intent
+
+
+
 
 
 

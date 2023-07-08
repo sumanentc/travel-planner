@@ -1,9 +1,16 @@
-## Travel Planner Bot
+## RoamWise Travel Planner
+Introducing RoamWise, the revolutionary travel planner app powered by cutting-edge generative AI technology.
 
-The travel planner application is designed to assist users in creating and organizing their travel itineraries. With this intuitive and user-friendly app, users can easily plan their trips, whether for business or leisure purposes.
+![RoamWise](./images/roamWise.jpg)
 
-Key features of the travel planner app include:
+RoamWise is a travel planning application designed to enhance your exploration and make your journeys more seamless. With RoamWise, you can unlock the full potential of your travels by providing intelligent recommendations, comprehensive itineraries, and convenient travel management tools.
+
+Discover new destinations and hidden gems tailored to your preferences, interests, and travel style. RoamWise combines advanced algorithms with curated travel content to offer personalized recommendations that suit your individual tastes. Whether you're an adventure seeker, a food enthusiast, a history buff, or simply looking to unwind, RoamWise ensures your travel experiences align with your desires.
+
+Key features RoamWise include:
+* Destination Recommendation: Users can discover perfect travel destination based on their preferences and interests.
 * Itinerary Creation: Users can create detailed itineraries by inputting their destination, travel dates, and duration of the trip.
+* Context based Recommendation: Users will get personalized travel recommendations tailored to their specific context and preferences.
 
 Overall, the travel planner app aims to simplify the process of itinerary creation, enhance travel organization, and provide users with a seamless and enjoyable travel planning experience.
 
@@ -12,8 +19,11 @@ Overall, the travel planner app aims to simplify the process of itinerary creati
 - [Rasa : 3.5.2 ](https://rasa.com/docs/rasa/)
 - [Python : 3.9 ](https://www.python.org/)
 - [Rasa-SDK Action Server : 3.5.1 ](https://rasa.com/docs/action-server)
-- [RASA-X :0.38.1](https://rasa.com/docs/rasa-x/)
-- [Requests-cache](https://requests-cache.readthedocs.io/en/latest/user_guide.html)
+- [RASA-X :1.0.0](https://rasa.com/docs/rasa-x/)
+- [LangChain](https://python.langchain.com/docs/get_started/introduction.html)
+- [ChatGPT](https://openai.com/blog/chatgpt)
+
+![Vesion](./images/rasa-version.png)
 
 ## Getting Started
 
@@ -25,6 +35,7 @@ Overall, the travel planner app aims to simplify the process of itinerary creati
 - [Helm](https://helm.sh/docs/intro/install/)
 - [Kubernetes](https://kubernetes.io/docs/setup/)
 
+
 ### Installation
 
 - Clone the repository
@@ -33,7 +44,7 @@ Overall, the travel planner app aims to simplify the process of itinerary creati
   git clone https://github.com/sumanentc/travel-planner.git
   ```
 
-- Using RASA Shell and Stand alone Action Server
+- Using RASA Shell and Stand-alone Action Server
 
 1. Install dependencies
 
@@ -46,24 +57,25 @@ Overall, the travel planner app aims to simplify the process of itinerary creati
 2. Train the model
 
   ```
-  rasa train
+  rasa train --force
 
   ```
 
 3. Start the Action Server
 
   ```
-  rasa run actions -vv
+  rasa run actions
 
   ```
 
 4. Start the RASA shell
 
   ```
-  rasa shell -v
+  rasa shell 
   ```
-
 5. Start asking questions on the RASA shell
+
+![RASA-X ](./images/shell.png)
 
 - Using Docker Compose for Installation
   **Note** : Here I am using my personal docker hub account to store the image: **sumand**
@@ -122,6 +134,7 @@ After executing the above Helm Chart, check RAXA-X is deployed successfully. Exe
 ```
 kubectl get pods -n rasa
 ```
+![Pods](./images/pods.png)
 
 Once all the pods are up and running then the RASA-X UI can be opened using the below url. Use the Password specified in Values.yml file to login.
 
