@@ -1,6 +1,0 @@
-[
-  {
-    "name": "month",
-    "pattern": "(\\bjanuary\\b|\\bfebrauary\\b|\\bmarch\\b|\\bapril\\b|\\bmay\\b|\\bjune\\b|\\bjuly\\b|\\baugust\\b|\\bseptember\\b|\\boctober\\b|\\bnovember\\b|\\bdecember\\b|\\bjan\\b|\\bfeb\\b|\\bmar\\b|\\bjun\\b|\\bjul\\b|\\baug\\b|\\bsep\\b|\\boct\\b|\\bnov\\b|\\bdec\\b)"
-  }
-]

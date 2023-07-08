@@ -23,6 +23,8 @@ Overall, the travel planner app aims to simplify the process of itinerary creati
 - [LangChain](https://python.langchain.com/docs/get_started/introduction.html)
 - [ChatGPT](https://openai.com/blog/chatgpt)
 
+![Vesion](./images/rasa-version.png)
+
 ## Getting Started
 
 ### Prerequisites
@@ -33,6 +35,7 @@ Overall, the travel planner app aims to simplify the process of itinerary creati
 - [Helm](https://helm.sh/docs/intro/install/)
 - [Kubernetes](https://kubernetes.io/docs/setup/)
 
+
 ### Installation
 
 - Clone the repository
@@ -41,7 +44,7 @@ Overall, the travel planner app aims to simplify the process of itinerary creati
   git clone https://github.com/sumanentc/travel-planner.git
   ```
 
-- Using RASA Shell and Stand alone Action Server
+- Using RASA Shell and Stand-alone Action Server
 
 1. Install dependencies
 
@@ -70,9 +73,9 @@ Overall, the travel planner app aims to simplify the process of itinerary creati
   ```
   rasa shell 
   ```
-![RASA-X ](./images/shell.png)
-
 5. Start asking questions on the RASA shell
+
+![RASA-X ](./images/shell.png)
 
 - Using Docker Compose for Installation
   **Note** : Here I am using my personal docker hub account to store the image: **sumand**
@@ -131,6 +134,7 @@ After executing the above Helm Chart, check RAXA-X is deployed successfully. Exe
 ```
 kubectl get pods -n rasa
 ```
+![Pods](./images/pods.png)
 
 Once all the pods are up and running then the RASA-X UI can be opened using the below url. Use the Password specified in Values.yml file to login.
 

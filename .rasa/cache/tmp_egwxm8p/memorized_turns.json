@@ -1,9 +1,0 @@
-{
-  "lookup": {
-    "eJyLrq6NBQAEOAGx": "action_listen",
-    "eJyLrq7VUaguKEoti09MLsnMz7NSqIYw4vMSc1OtFKCcnMziktQ8oNrS4tQioJrMPCC3xEohvSg1taS2NhYA6dwbhQ==": "utter_greet",
-    "eJyLrq7VUaguKEoti09MLsnMz7NSqIYw4vMSc1OtFKCcnMziktQ8oNrS4tQioJrMPCC3xEohvSg1taSWgBmlJSWpRfEQpbhMiAUAQvc0lw==": "action_listen",
-    "eJydjlEKgCAQBa+yB+gEXiVCJB6xYFusqxDi3RPsX+jvDQzDW2tbqN6K4sNufImjOoaXcMLRB5GTQbqbE7Q7LB3N0aGAtUkjm0H9UP8VJi9MQ0H0bCzQoE9r2wsoxFMY": "travel_itinerary_action",
-    "eJydzkEKgCAQheGreIBO4FUiROIRAzbFOAoh3j3BVm2MdvPg42fmUidTTkF2flU62JrSD8d+hzXPCBQV3GyKkGaI21RrNgG0DhpJFeI6/VcYfKHiM4IjJYZ4uUa5t3/Yl/ByAwz/dc4=": "action_listen"
-  }
-}
