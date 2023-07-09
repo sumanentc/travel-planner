@@ -36,25 +36,6 @@ nlu:
     - In what way can I assist you? Please feel free to share your needs or questions.
     - Let's continue
 
-- intent: affirm
-  examples: |
-    - yes
-    - y
-    - indeed
-    - of course
-    - that sounds good
-    - correct
-
-- intent: deny
-  examples: |
-    - no
-    - n
-    - never
-    - I don't think so
-    - don't like that
-    - no way
-    - not really
-
 - intent: mood_great
   examples: |
     - perfect
@@ -81,28 +62,13 @@ nlu:
     - That was top-notch!
     - I'm really impressed, that was remarkable!
 
-- intent: mood_unhappy
-  examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
-
-
 - intent: travel_itinerary
   examples: |
-    - I am looking for a travel destination that has [sunny sandy beaches](theme), [beautiful views](theme) all around the city, and an [overall party](theme) and relaxing vibe.
     - plan a trip to [Vietnam](place)
+    - plan a trip to [Manali](place)
+    - plan a trip to [Shimla](place)
+    - plan a trip to [Goa](place)
+    - plan a trip to [goa](place) along with hotels
     - I'm interested in traveling to [India](place). Can you help me plan a trip plan?
     - I've been considering a trip to [usa](place). How can I go about planning it?
     - I'm thinking of visiting [Sweden](place). Do you have any advice on how to plan the trip?
@@ -110,6 +76,7 @@ nlu:
     - I've set my sights on [Singapore](place) as my next travel destination. Where should I begin when it comes to planning?
     - plan a trip to [kerala](place)
     - help me with a trip itenary for [egypt](place)
+    - help me with a trip itenary for [Russia](place)
     - help me with a trip itenary for [Korea](place)
     - trip to [himachal](place) in [june](month)
     - trip to [himachal](place) in [aug](month)
@@ -176,8 +143,14 @@ nlu:
 
 - intent: travel_query
   examples: |
+    - I am looking for a travel destination that has [sunny sandy beaches](theme), [beautiful views](theme) all around the city, and an [overall party](theme) and relaxing vibe.
     - I am looking for a travel destination that has sunny sandy beaches. Can you help me with that?
-    - I am looking for a travel destination that has sunny sandy beaches, beautiful views all around the city, and an overall party and relaxing vibe. Can you help me figure it?
+    - what is the best time to travel to manali?
+    - can you suggest me the best time to travel?
+    - can you suggest me the month?
+    - suggest the best time to travel himachal?
+    - Could you recommend the ideal timing for my travel?
+    - Can you suggest the most favorable period to travel?
     - suggest me some places in india in the month of [Dec](month)
     - recommend some places in Turkey place.
     - places to visit in [dec](month) in India.
@@ -214,11 +187,26 @@ nlu:
     - Which destinations are popular among [mountain](theme) seekers?
     - Can you suggest travel destinations that offer a [snow](theme) experience in India?
     - Which destinations are popular for [honeymoon](theme) ?
-    - Could you recommend a few hotels in Goa, please?
-    - Can you suggest some hotels to stay at in Bali?
-    - I'm looking for hotel recommendations in Kashmir. Any suggestions?
-    - I would appreciate it if you could suggest some hotels in Kerala
-    - I'm planning a trip to Maldives and would love your suggestions on hotels to consider.
+
+
+- intent: hotel_query
+  examples: |
+      - suggest some [hotels](stay) in goa
+      - suggest me some [hotels](stay) under 6000 in manali
+      - suggest me some [resorts](stay) under 6000 in shimla
+      - can you suggest me some [hotels](stay) in goa?
+      - [hotels](stay) to stay in goa?
+      - [resorts](stay) to stay in goa?
+      - Could you recommend a few [hotels](stay) in Goa, please?
+      - Can you suggest some [hotels](stay) to stay at in Bali?
+      - I'm looking for [hotel](stay) recommendations in Kashmir. Any suggestions?
+      - I would appreciate it if you could suggest some [hotels](stay) in Kerala
+      - I'm planning a trip to Maldives and would love your suggestions on [hotels](stay) to consider.
+      - suggest me some [hotel](stay) to stay in manali under 5000 per day
+      - suggest me some [resort](stay) in goa near to beaches
+      - suggest me some [hostel](stay) in goa near to beaches
+
+
 
 - lookup: month
   examples: |

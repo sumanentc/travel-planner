@@ -8,9 +8,10 @@ RoamWise is a travel planning application designed to enhance your exploration a
 Discover new destinations and hidden gems tailored to your preferences, interests, and travel style. RoamWise combines advanced algorithms with curated travel content to offer personalized recommendations that suit your individual tastes. Whether you're an adventure seeker, a food enthusiast, a history buff, or simply looking to unwind, RoamWise ensures your travel experiences align with your desires.
 
 Key features RoamWise include:
-* Destination Recommendation: Users can discover perfect travel destination based on their preferences and interests.
-* Itinerary Creation: Users can create detailed itineraries by inputting their destination, travel dates, and duration of the trip.
-* Context based Recommendation: Users will get personalized travel recommendations tailored to their specific context and preferences.
+* **Destination Recommendation**: Users can discover perfect travel destination based on their preferences and interests.
+* **Itinerary Creation**: Users can create detailed itineraries by inputting their destination, travel dates, and duration of the trip.
+* **Context based Recommendation**: Users will get personalized travel recommendations tailored to their specific context and preferences.
+* **Hotel Recommendation**: Get hotel recommendation based on budget or some other preference.
 
 Overall, the travel planner app aims to simplify the process of itinerary creation, enhance travel organization, and provide users with a seamless and enjoyable travel planning experience.
 

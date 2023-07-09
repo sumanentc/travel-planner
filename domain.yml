@@ -3,14 +3,12 @@ version: "3.1"
 intents:
   - greet
   - goodbye
-  - affirm
   - continue
-  - deny
   - mood_great
-  - mood_unhappy
   - slot_reset
   - travel_itinerary
   - travel_query
+  - hotel_query
   - please_rephrase
 
 entities:
@@ -18,6 +16,7 @@ entities:
   - place
   - days
   - theme
+  - stay
 
 slots:
   place:
@@ -43,6 +42,13 @@ slots:
     mappings:
     - type: from_entity
       entity: theme
+
+  stay:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: stay
 forms:
   travel_info_form:
     required_slots:
@@ -97,23 +103,20 @@ responses:
     - text: "Goodbye for now"
     - text: "Catch you later"
 
-  utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
-
-  utter_ask_month:
-  - text: "In which month would you like to travel"
-  - text: "Can you please let me know the month of your travel"
-
   utter_ask_place:
   - text: "where would you like to go"
   - text: "Do you have any preferred location"
 
   utter_ask_days:
     - text: "For how many days you want to travel?"
-    - text: "How any days for which you want this vacation?"
+    - text: "How many days for which you want this vacation?"
 
-  utter_ask_question:
-  - text: "Let me know how may i help you?"
+  utter_ask_month:
+    - text: "When are you planning to travel? Which month suits you best?"
+    - text: "What month are you considering for your travel?"
+    - text: "In which specific month are you interested in traveling?"
+    - text: "Which month would be ideal for your travel plans?"
+    - text: "Do you have a preferred month in mind for your travel?"
 
   utter_please_rephrase:
   - text: "I'm sorry, I didn't quite understand your input"
@@ -128,16 +131,16 @@ actions:
   - utter_goodbye
   - utter_greet
   - utter_continue
-  - utter_ask_question
   - utter_entry
   - utter_mood_great
   - utter_please_rephrase
   - utter_welcome
   - utter_do_you_have_question
   - utter_ask_place
-  - utter_ask_month
   - utter_ask_days
+  - utter_ask_month
   - action_validate_slot_mappings
   - travel_itinerary_action
   - travel_query_action
+  - hotel_query_action
   - action_unlikely_intent
