@@ -1,19 +1,10 @@
 version: "3"
 services:
-  ngrok:
-    image: shkoliar/ngrok:latest
-    networks: ["rasa-network"]
-    ports:
-      - 4551:4551
-    links:
-      - rasa
-    environment:
-      - DOMAIN=rasa
-      - PORT=5005
-    depends_on:
-      - rasa
   rasa:
     image: sumand/rasa-server:3.5.2
+    container_name: rasa-server
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
     networks: ["rasa-network"]
     ports:
       - "5005:5005"
@@ -21,7 +12,15 @@ services:
       - "./:/app"
     command:
       - run
+      - --cors
+      - "*"
+      - --enable-api
+    depends_on:
+      - action-server
   action-server:
+    container_name: rasa-action-server
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
     image: sumand/rasa-action-server:3.5.1
     networks: ["rasa-network"]
     ports:
