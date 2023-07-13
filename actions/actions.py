@@ -354,7 +354,6 @@ def get_travel_query_prompt(user_input: str):
     - Provide at max 2 to 3 recommendations related to travel query.
     - Please consider the user preferences such as month of travel, themes and any other preferences provided in the UserInput.
     - Please mention the best time to travel to these destinations.
-    - The output must be in raw markdown for javascript format in Paragraph style.
     - Don't mention based on the user input, in the response.
     - Don't mention Based on the UserInput, in the response
     - Don't mention As an expert travel planner, in the response
@@ -364,7 +363,7 @@ def get_travel_query_prompt(user_input: str):
     - Don't mention Based on your input, in the response
     - Don't mention Based on the user's preference, in the response
     - Don't mention Based on your input, in the response
-    - Present the output in raw markdown for javascript format
+    - The output must be in raw markdown for javascript format in Paragraph style.
     UserInput: ```{user_input}```
     """
 
@@ -392,11 +391,11 @@ def get_travel_month_prompt(user_input: str):
 
 def get_hotel_enquiry_prompt(user_input: str):
     return f"""
-    - You are an expert travel planner for hotel bookings.
+    - You are an expert travel planner for Hotel, Resort or Villa bookings.
     - Your task is to extract relevant information from the UserInput below, delimited by triple backticks and perform the following actions:
     1. Search for Hotels or Resorts for a given destination with the given preference from User.
     2. Add some recent reviews if available.
-    2. The output should be in raw markdown for javascript format in Paragraph style.
+    2. Add the stay cost of per day in the response
     - Don't mention based on the user input, in the response.
     - Don't mention Based on the UserInput, in the response
     - Don't mention As an expert travel planner, in the response
@@ -406,7 +405,7 @@ def get_hotel_enquiry_prompt(user_input: str):
     - Don't mention Based on your input, in the response
     - Don't mention Based on the user's preference, in the response
     - Don't mention Based on your input, in the response
-    - Present the output in raw markdown for javascript format
+    - The output should be in raw markdown for javascript format in Paragraph style.
     UserInput: ```{user_input}```
     """
 

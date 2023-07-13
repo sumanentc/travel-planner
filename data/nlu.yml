@@ -205,8 +205,12 @@ nlu:
       - suggest me some [hotel](stay) to stay in manali under 5000 per day
       - suggest me some [resort](stay) in goa near to beaches
       - suggest me some [hostel](stay) in goa near to beaches
-
-
+      - Can you suggest some affordable [hotels](stay) or [resorts](stay) within a budget?
+      - I'm looking for [hotel](stay) or [resort](stay) recommendations that fit within a specific budget 5000 per day. Any suggestions?
+      - Could you recommend reasonably priced [hotels](stay) that won't break the bank?
+      - Could you recommend reasonably priced [resorts](stay) that won't break the bank?
+      - Can you help me find [hotels](stay) that offer good value for the price?
+      - Can you help me find [resorts](stay) that offer good value for the price?
 
 - lookup: month
   examples: |
