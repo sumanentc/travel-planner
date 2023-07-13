@@ -83,7 +83,7 @@ Overall, the travel planner app aims to simplify the process of itinerary creati
 
 - Install the Bot along with RASA-X UI
 
-1. Build Action Server Docker image
+1. Build and push RASA Action Server Docker image
 
 ```
 docker build actions/ -t sumand/rasa-action-server:3.5.1
@@ -92,7 +92,7 @@ docker push sumand/rasa-action-server:3.5.1
 
 ```
 
-2. Build Rasa NLU Docker image
+2. Build and push Rasa NLU Docker image
 
 ```
 docker build . -t sumand/rasa-server:3.5.2
@@ -108,7 +108,7 @@ docker push sumand/rasa-server:3.5.2
 kubectl create namespace rasa
 ```
 
-3.2 deploy RASA-X using the Helm Chart along with the customization specified in values.yml
+3.2 Deploy RASA-X using the Helm Chart along with the customization specified in values.yml
 
 ```
 helm repo add rasa-x https://rasahq.github.io/rasa-x-helm
@@ -116,12 +116,12 @@ helm repo add rasa-x https://rasahq.github.io/rasa-x-helm
 helm --namespace rasa install --values values.yml my-release rasa-x/rasa-x
 ```
 
-3.3 Update the Helm Chart in case we need any changes
+3.3 [Optional] Update the Helm Chart in case we need any changes
 
 ```
 helm --namespace rasa upgrade --values values.yml my-release rasa-x/rasa-x
 ```
-3.4 Delete all the deployment in case not required
+3.4 [Optional] Delete all the deployment in case not required, or wanted to perform cleanup
 
 ```
 helm uninstall my-release -n rasa
@@ -143,7 +143,7 @@ Once all the pods are up and running then the RASA-X UI can be opened using the 
 http://localhost:8000/login
 ```
 
-![RASA-X ](./images/RASA-X-Login.png)
+![RASA-X ](./images/rasa-x-login.png)
 
 Upload the model after login and make the model active
 
@@ -152,3 +152,7 @@ Upload the model after login and make the model active
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
+
+## References
+
+https://rasa.com/docs/rasa-enterprise/1.0.x/installation-and-setup/install/rasa-ephemeral-installer/configuration/#:~:text=By%20default%2C%20the%20password%20for,read%20the%20password%20from%20STDIN%20.
