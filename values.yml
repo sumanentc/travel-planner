@@ -3,6 +3,8 @@ debugMode: "true"
 rasax:
   # initialUser is the user which is created upon the initial start of Rasa X
   initialUser:
+    # username specifies a name of this user
+    username: "admin"
     # password for the Rasa X user
     password: "Password123"
   # passwordSalt Rasa X uses to salt the user passwords

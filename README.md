@@ -8,9 +8,10 @@ RoamWise is a travel planning application designed to enhance your exploration a
 Discover new destinations and hidden gems tailored to your preferences, interests, and travel style. RoamWise combines advanced algorithms with curated travel content to offer personalized recommendations that suit your individual tastes. Whether you're an adventure seeker, a food enthusiast, a history buff, or simply looking to unwind, RoamWise ensures your travel experiences align with your desires.
 
 Key features RoamWise include:
-* Destination Recommendation: Users can discover perfect travel destination based on their preferences and interests.
-* Itinerary Creation: Users can create detailed itineraries by inputting their destination, travel dates, and duration of the trip.
-* Context based Recommendation: Users will get personalized travel recommendations tailored to their specific context and preferences.
+* **Destination Recommendation**: Users can discover perfect travel destination based on their preferences and interests.
+* **Itinerary Creation**: Users can create detailed itineraries by inputting their destination, travel dates, and duration of the trip.
+* **Context based Recommendation**: Users will get personalized travel recommendations tailored to their specific context and preferences.
+* **Hotel Recommendation**: Get hotel recommendation based on budget or some other preference.
 
 Overall, the travel planner app aims to simplify the process of itinerary creation, enhance travel organization, and provide users with a seamless and enjoyable travel planning experience.
 
@@ -82,7 +83,7 @@ Overall, the travel planner app aims to simplify the process of itinerary creati
 
 - Install the Bot along with RASA-X UI
 
-1. Build Action Server Docker image
+1. Build and push RASA Action Server Docker image
 
 ```
 docker build actions/ -t sumand/rasa-action-server:3.5.1
@@ -91,7 +92,7 @@ docker push sumand/rasa-action-server:3.5.1
 
 ```
 
-2. Build Rasa NLU Docker image
+2. Build and push Rasa NLU Docker image
 
 ```
 docker build . -t sumand/rasa-server:3.5.2
@@ -107,7 +108,7 @@ docker push sumand/rasa-server:3.5.2
 kubectl create namespace rasa
 ```
 
-3.2 deploy RASA-X using the Helm Chart along with the customization specified in values.yml
+3.2 Deploy RASA-X using the Helm Chart along with the customization specified in values.yml
 
 ```
 helm repo add rasa-x https://rasahq.github.io/rasa-x-helm
@@ -115,12 +116,12 @@ helm repo add rasa-x https://rasahq.github.io/rasa-x-helm
 helm --namespace rasa install --values values.yml my-release rasa-x/rasa-x
 ```
 
-3.3 Update the Helm Chart in case we need any changes
+3.3 [Optional] Update the Helm Chart in case we need any changes
 
 ```
 helm --namespace rasa upgrade --values values.yml my-release rasa-x/rasa-x
 ```
-3.4 Delete all the deployment in case not required
+3.4 [Optional] Delete all the deployment in case not required, or wanted to perform cleanup
 
 ```
 helm uninstall my-release -n rasa
@@ -142,7 +143,7 @@ Once all the pods are up and running then the RASA-X UI can be opened using the 
 http://localhost:8000/login
 ```
 
-![RASA-X ](./images/RASA-X-Login.png)
+![RASA-X ](./images/rasa-x-login.png)
 
 Upload the model after login and make the model active
 
@@ -151,3 +152,7 @@ Upload the model after login and make the model active
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
+
+## References
+
+https://rasa.com/docs/rasa-enterprise/1.0.x/installation-and-setup/install/rasa-ephemeral-installer/configuration/#:~:text=By%20default%2C%20the%20password%20for,read%20the%20password%20from%20STDIN%20.
