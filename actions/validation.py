@@ -45,7 +45,7 @@ class ValidateTravelInfoSlots(ValidationAction):
             dispatcher.utter_message(text='Please specify number of days in numbers correctly')
             return {"days": None}
 
-    def validate_place(
+    def validate_destination(
             self,
             slot_value: Any,
             dispatcher: CollectingDispatcher,
@@ -56,7 +56,23 @@ class ValidateTravelInfoSlots(ValidationAction):
         print(f"Validating place {slot_value}")
         print(f"User Input {tracker.latest_message}")
         if slot_value and slot_value.replace(" ", "").isalpha():
-            return {"place": slot_value}
+            return {"destination": slot_value}
         else:
-            return {"place": 'World'}
+            return {"destination": 'World'}
+
+    def validate_source(
+            self,
+            slot_value: Any,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        """Validate place value."""
+        print(f"Validating place {slot_value}")
+        print(f"User Input {tracker.latest_message}")
+        if slot_value and slot_value.replace(" ", "").isalpha():
+            return {"source": slot_value}
+        else:
+            dispatcher.utter_message(text='Please specify desired starting point correctly')
+            return {"source": None}
 

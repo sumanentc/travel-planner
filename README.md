@@ -115,6 +115,14 @@ curl -X POST localhost:5005/webhooks/rest/webhook -d '{"sender":"Me","message":"
 
 ```
 
+- Slack Integration
+
+Follow the steps mentioned in the below wiki to integrate with Slack channel.
+
+[Slack-Integration](https://rasa.com/docs/rasa/connectors/slack/)
+
+![Slack](./images/slack.png)
+
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
