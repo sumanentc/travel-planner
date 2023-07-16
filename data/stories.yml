@@ -37,7 +37,7 @@ stories:
     - action: travel_info_form
     - active_loop: travel_info_form
     - slot_was_set:
-        - requested_slot: place
+        - requested_slot: destination
     - slot_was_set:
         - requested_slot: month
     - slot_was_set:
@@ -56,7 +56,7 @@ stories:
     - action: travel_info_form
     - active_loop: travel_info_form
     - slot_was_set:
-        - requested_slot: place
+        - requested_slot: destination
     - slot_was_set:
         - requested_slot: month
     - slot_was_set:
@@ -73,7 +73,7 @@ stories:
     - action: travel_info_form
     - active_loop: travel_info_form
     - slot_was_set:
-        - requested_slot: place
+        - requested_slot: destination
     - slot_was_set:
         - requested_slot: month
     - slot_was_set:
@@ -90,7 +90,7 @@ stories:
     - action: travel_info_form
     - active_loop: travel_info_form
     - slot_was_set:
-        - requested_slot: place
+        - requested_slot: destination
     - slot_was_set:
         - requested_slot: month
     - intent: travel_query
@@ -102,6 +102,24 @@ stories:
         - requested_slot: null
     - active_loop: null
     - action: travel_itinerary_action
+    - action: utter_do_you_have_question
+
+
+- story: travel cost diectly
+  steps:
+    - intent: trip_cost
+    - action: travel_cost_form
+    - active_loop: travel_cost_form
+    - slot_was_set:
+        - requested_slot: source
+    - slot_was_set:
+        - requested_slot: budget
+    - slot_was_set:
+        - requested_slot: head_count
+    - slot_was_set:
+        - requested_slot: null
+    - active_loop: null
+    - action: travel_cost_action
     - action: utter_do_you_have_question
 
 

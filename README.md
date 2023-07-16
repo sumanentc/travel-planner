@@ -35,6 +35,7 @@ Overall, the travel planner app aims to simplify the process of itinerary creati
 - [Docker](https://docs.docker.com/engine/install/)
 - [Helm](https://helm.sh/docs/intro/install/)
 - [Kubernetes](https://kubernetes.io/docs/setup/)
+- [OPEN_API_KEY](https://help.openai.com/en/articles/4936850-where-do-i-find-my-secret-api-key)
 
 
 ### Installation
@@ -65,6 +66,7 @@ Overall, the travel planner app aims to simplify the process of itinerary creati
 3. Start the Action Server
 
   ```
+  export OPENAI_API_KEY="valid api key"     
   rasa run actions
 
   ```
@@ -81,11 +83,10 @@ Overall, the travel planner app aims to simplify the process of itinerary creati
 - Using Docker Compose for Installation
   **Note** : Here I am using my personal docker hub account to store the image: **sumand**
 
-- Install the Bot along with RASA-X UI
 
 1. Build and push RASA Action Server Docker image
 
-```
+```commandline
 docker build actions/ -t sumand/rasa-action-server:3.5.1
 
 docker push sumand/rasa-action-server:3.5.1
@@ -94,60 +95,33 @@ docker push sumand/rasa-action-server:3.5.1
 
 2. Build and push Rasa NLU Docker image
 
-```
+```commandline
 docker build . -t sumand/rasa-server:3.5.2
 
 docker push sumand/rasa-server:3.5.2
 ```
 
-3. Install RASA-X. I used [Helm-Chart](https://rasa.com/docs/rasa-x/installation-and-setup/install/helm-chart) for installation.
+3. Start the NLU Container
 
-3.1 Create new namespace for rasa deployment
-
-```
-kubectl create namespace rasa
-```
-
-3.2 Deploy RASA-X using the Helm Chart along with the customization specified in values.yml
-
-```
-helm repo add rasa-x https://rasahq.github.io/rasa-x-helm
-
-helm --namespace rasa install --values values.yml my-release rasa-x/rasa-x
-```
-
-3.3 [Optional] Update the Helm Chart in case we need any changes
-
-```
-helm --namespace rasa upgrade --values values.yml my-release rasa-x/rasa-x
-```
-3.4 [Optional] Delete all the deployment in case not required, or wanted to perform cleanup
-
-```
-helm uninstall my-release -n rasa
+```commandline
+OPENAI_API_KEY='valid api key' docker-compose up
 
 ```
 
-4. Deploy [RASA-X](https://rasa.com/docs/rasa-x/installation-and-setup/deploy)
+4. Test the Bot using REST API
 
-After executing the above Helm Chart, check RAXA-X is deployed successfully. Execute the below commands to check if all the pods are up and running. Else check the logs of individual pods for ERROR.
-
-```
-kubectl get pods -n rasa
-```
-![Pods](./images/pods.png)
-
-Once all the pods are up and running then the RASA-X UI can be opened using the below url. Use the Password specified in Values.yml file to login.
+```buildoutcfg
+curl -X POST localhost:5005/webhooks/rest/webhook -d '{"sender":"Me","message":"Suggest me some places with mountain and snow in India"}'
 
 ```
-http://localhost:8000/login
-```
 
-![RASA-X ](./images/rasa-x-login.png)
+- Slack Integration
 
-Upload the model after login and make the model active
+Follow the steps mentioned in the below wiki to integrate with Slack channel.
 
-![RASA-X ](./images/upload-model.png)
+[Slack-Integration](https://rasa.com/docs/rasa/connectors/slack/)
+
+![Slack](./images/slack.png)
 
 ## License
 

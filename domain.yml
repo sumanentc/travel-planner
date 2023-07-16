@@ -10,21 +10,51 @@ intents:
   - travel_query
   - hotel_query
   - please_rephrase
+  - trip_cost
 
 entities:
   - month
-  - place
+  - destination
   - days
   - theme
   - stay
+  - source
+  - budget
+  - head_count
+  - preffered_stay
+  - preffered_itinerary
 
 slots:
-  place:
+  preffered_stay:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: preffered_stay
+  source:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: source
+  budget:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: budget
+  head_count:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: head_count
+  destination:
     type: text
     influence_conversation: true
     mappings:
     - type: from_entity
-      entity: place
+      entity: destination
   month:
     type: text
     influence_conversation: true
@@ -37,12 +67,17 @@ slots:
     mappings:
       - type: from_entity
         entity: days
-  theme:
+
+  preffered_itinerary:
     type: text
     mappings:
     - type: from_entity
-      entity: theme
-
+      entity: preffered_itinerary
+  theme:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: theme
   stay:
     type: text
     influence_conversation: true
@@ -52,9 +87,14 @@ slots:
 forms:
   travel_info_form:
     required_slots:
-    - place
+    - destination
     - month
     - days
+  travel_cost_form:
+    required_slots:
+    - source
+    - budget
+    - head_count
 
 responses:
   utter_greet:
@@ -103,23 +143,38 @@ responses:
     - text: "Goodbye for now"
     - text: "Catch you later"
 
-  utter_ask_place:
-  - text: "where would you like to go"
-  - text: "Do you have any preferred location"
+  utter_ask_source:
+    - text: "Where would you like to begin your journey from ?"
+    - text: "From which location do you plan to initiate your trip ?"
+    - text: "What is your preferred departure point for the trip ?"
+
+  utter_ask_head_count:
+    - text: "What is the total headcount for the trip ?"
+    - text: "Can you please provide the number of individuals participating in the trip?"
+    - text: "How many people are included in the trip group ?"
+
+  utter_ask_destination:
+  - text: "where would you like to go ?"
+  - text: "Do you have any preferred location ?"
 
   utter_ask_days:
-    - text: "For how many days you want to travel?"
-    - text: "How many days for which you want this vacation?"
+    - text: "For how many days you want to travel ?"
+    - text: "How many days for which you want this vacation ?"
 
   utter_ask_month:
-    - text: "When are you planning to travel? Which month suits you best?"
-    - text: "What month are you considering for your travel?"
-    - text: "In which specific month are you interested in traveling?"
-    - text: "Which month would be ideal for your travel plans?"
-    - text: "Do you have a preferred month in mind for your travel?"
+    - text: "When are you planning to travel? Which month suits you best ?"
+    - text: "What month are you considering for your travel ?"
+    - text: "In which specific month are you interested in traveling ?"
+    - text: "Which month would be ideal for your travel plans ?"
+    - text: "Do you have a preferred month in mind for your travel ?"
+
+  utter_ask_preffered_stay:
+    - text: "What is your preferred hotel budget or price range?"
+    - text: "Could you please specify your desired hotel budget or spending limit?"
 
   utter_please_rephrase:
   - text: "I'm sorry, I didn't quite understand your input"
+
   utter_entry:
   - text: Welcome to RoamWise, your travel partner..!!
 
@@ -136,11 +191,15 @@ actions:
   - utter_please_rephrase
   - utter_welcome
   - utter_do_you_have_question
-  - utter_ask_place
+  - utter_ask_source
+  - utter_ask_destination
   - utter_ask_days
   - utter_ask_month
+  - utter_ask_head_count
+  - utter_ask_preffered_stay
   - action_validate_slot_mappings
   - travel_itinerary_action
   - travel_query_action
   - hotel_query_action
+  - travel_cost_action
   - action_unlikely_intent
