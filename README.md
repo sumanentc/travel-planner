@@ -15,6 +15,10 @@ Key features RoamWise include:
 
 Overall, the travel planner app aims to simplify the process of itinerary creation, enhance travel organization, and provide users with a seamless and enjoyable travel planning experience.
 
+**Video demonstration (click the picture):**
+
+[![RoamWise](./images/roamwise1.png)](https://youtu.be/P30QUiCsvRI)
+
 ### Built With
 
 - [Rasa : 3.5.2 ](https://rasa.com/docs/rasa/)
@@ -130,3 +134,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## References
 
 https://rasa.com/docs/rasa-enterprise/1.0.x/installation-and-setup/install/rasa-ephemeral-installer/configuration/#:~:text=By%20default%2C%20the%20password%20for,read%20the%20password%20from%20STDIN%20.
+
+https://python.langchain.com/docs/get_started/introduction.html
+
+https://platform.openai.com/docs/models
+
+
