@@ -400,7 +400,7 @@ def get_itinerary_prompt(user_input: str):
     - You are an expert travel planner.
     - Your task is to extract relevant information from the UserInput below, delimited by triple backticks and help me prepare a travel itinerary.
     - Travel itinerary should be provided day wise.
-    - Search for hotels for each of the recommended places.
+    - Search for hotels,resort or places to stay for each of the recommended places.
     - Must include recommended hotel or resort name for each day.
     - Must include the Hotel check-in and check-out activity for each and every hotel in the itinerary.
     - Please consider the user preference such as month of travel, destination, number of days of travel, themes and any other preferences provided in the context.
