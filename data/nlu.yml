@@ -1,6 +1,16 @@
 version: "3.1"
 
 nlu:
+- intent: start
+  examples: |
+    - start
+    - who are you?
+
+- intent: skill
+  examples: |
+    - what you can do?
+    - how can you help?
+    - what things you can do?
 - intent: greet
   examples: |
     - hey
@@ -94,7 +104,7 @@ nlu:
     - I need help organizing my travel plans for my upcoming trip to [Japan](destination). Can you offer any guidance?
     - I'm looking for recommendations and suggestions for things to do in [thailand](destination). Can you help me create an itinerary?
     - I'm feeling overwhelmed with planning my activities in [kashmir](destination). Is there someone who can assist me with my itinerary?
-    - I'm seeking assistance in mapping out my travel plans for [Himachal](destination). Can you provide any recommendations?
+    - I'm seeking assistance in mapping out my travel plans for [Switzerland](destination). Can you provide any recommendations?
     - I would appreciate some help in creating a detailed itinerary for my trip to [andaman](destination). Any suggestions?
     - I'm in need of expert advice for planning my activities in [ladakh](destination). How can I get itinerary help specific to that location?
     - Where can I find resources or professionals who can assist me in developing a travel itinerary for [Europe](destination)?

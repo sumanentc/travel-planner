@@ -24,6 +24,16 @@ rules:
     - intent: nlu_fallback
     - action: action_unlikely_intent
 
+- rule: Start the conversation with Telegram Bot
+  steps:
+    - intent: start
+    - action: utter_start
+
+- rule: Answer what skills you have
+  steps:
+    - intent: skill
+    - action: utter_skill
+
 
 
 

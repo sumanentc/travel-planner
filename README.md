@@ -11,7 +11,7 @@ Some Key features RoamWise include:
 * **Discover Destination**: Users can discover perfect travel destination based on their preferences.
 * **Itinerary Creation**: Users can create detailed itineraries by providing their destination, travel dates, and duration of the trip.
 * **Hotel Recommendation**: Get hotel recommendation based on budget or some other preferences.
-* **Travel Budget**: It can assist you with the travel budget approximation including hotel cost and airfare.
+* **Travel Budget Estimation**: It can assist you with the travel budget approximation including hotel cost and airfare.
 * **Context based Recommendations**: Users will get personalized travel recommendations tailored to their specific context and preferences.
 
 Overall, the travel planner app aims to simplify the process of itinerary creation, enhance travel organization, and provide users with a seamless and enjoyable travel planning experience.
