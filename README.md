@@ -140,4 +140,9 @@ https://python.langchain.com/docs/get_started/introduction.html
 
 https://platform.openai.com/docs/models
 
+https://ttt.studio/tech/rasa-chatbot/
+
+https://rasa.com/docs/rasa/connectors/slack/
+
+
 
