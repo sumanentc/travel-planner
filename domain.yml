@@ -100,9 +100,9 @@ forms:
 
 responses:
   utter_start:
-    - text: Welcome to RoamWise. I am your travel planner, who can help you with discover new destinations and hidden gems tailored to your preferences, interests, and travel style.
+    - text: Welcome to RoamWise. I am your personal travel planner, who can help you discover new destinations and hidden gems tailored to your preferences, interests, and travel style.
   utter_skill:
-    - text: "I can provide assistance for your next trip planning like discovering new destinations according to your preference. Help you plan when you can travel and what all activities you can perform"
+    - text: "I can provide assistance for your next trip planning like discovering new destinations according to your preference. Help you plan when you can travel and what all activities you can perform."
   utter_greet:
     - text: Hello! Let me know how may i help you?
     - text: Hey!! Let me know how may i help you?

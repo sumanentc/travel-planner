@@ -27,4 +27,15 @@ services:
       - "5055:5055"
     volumes:
       - "./actions:/app/actions"
+  nginx:
+    container_name: nginx
+    image: nginx
+    networks: ["rasa-network"]
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      #I kept my SSL certs in a certs folder in project directory (Make sure to include this in .gitignore)
+      - ./certs:/etc/letsencrypt/live/roamwise.in
 networks: { rasa-network: {} }
