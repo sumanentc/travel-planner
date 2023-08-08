@@ -77,7 +77,9 @@ nlu:
     - plan a trip to [Vietnam](destination)
     - help me plan a trip to [Ranthambore National Park, India](destination)
     - help me plan a trip to [Maasai Mara National Reserve, Kenya](destination)
+    - plan a trip to [Bhutan](destination)
     - plan a trip to [Manali](destination)
+    - plan a trip to [Podicherry](destination)
     - plan a trip to [Shimla](destination)
     - plan a trip to [Goa](destination)
     - plan a trip to [goa](destination) along with hotels
@@ -87,11 +89,18 @@ nlu:
     - [Paris](destination) has always intrigued me. What steps should I take to plan a trip there?
     - I've set my sights on [Singapore](destination) as my next travel destination. Where should I begin when it comes to planning?
     - plan a trip to [kerala](destination)
+    - plan a trip to [Gangtok](destination)
+    - plan a trip to [Tamil Nadu](destination)
+    - plan a trip to [Leh Ladakh](destination)
+    - plan a trip to [Bangalore](destination)
+    - plan a trip to [Lakshadweep](destination)
     - help me with a trip itenary for [egypt](destination)
     - help me with a trip itenary for [Russia](destination)
     - help me with a trip itenary for [Korea](destination)
     - trip to [himachal](destination) in [june](month)
     - trip to [Himachal Pradesh](destination) in [aug](month)
+    - trip to [Uttar Pradesh](destination) in [Nov](month)
+    - trip to [West Bengal](destination) in [Nov](month)
     - Can you assist me with planning my travel itinerary for the month of [december](month)?
     - I need help creating a detailed travel plan. Can you provide any guidance?
     - I'm looking for recommendations and suggestions for my upcoming trip. Can you help me with my itinerary
@@ -143,6 +152,7 @@ nlu:
     - Who can I contact to get assistance with organizing my travel itinerary for [Seville](destination) in [oct](month) for a [10](days) trip?
     - Who can I contact to get assistance with organizing my travel itinerary for [Noth East India](destination) in [October](month)?
     - I would appreciate some help in creating a detailed itinerary for my [10](days) trip to [Spain](destination) in [January](month). Any suggestions?
+    - suggest a spiritual vaccation in [Bhutan](destination)?
     - [Feb](month)
     - month is [march](month)
     - month [Feb](month)
@@ -178,6 +188,7 @@ nlu:
     - Recommend some place in the month of [Jan](month)?
     - Can you suggest me some place in India?
     - Can you suggest me some place ?
+    - Can you suggest me some place for weekend gateways in Mumbai?
     - Suggest me some places in the month of [dec](month) in Australia
     - can you suggest me some places around the world in the month of [Jan](month)
     - Which travel destinations are recommended for [January](month) in Europe?
@@ -203,7 +214,11 @@ nlu:
     - What are some off-the-beaten-path travel destinations that are perfect for [adventurous](theme) travelers seeking unique experiences?
     - Which destinations are popular among [mountain](theme) seekers?
     - Can you suggest travel destinations that offer a [snow](theme) experience in India?
-    - Which destinations are popular for [honeymoon](theme) ?
+    - Which destinations are popular for [honeymoon](theme) in India?
+    - Which destinations are popular for [spiritual](theme) experience ?
+    - Do you know about Podicherry?
+    - Suggest some weekend gateways in Bangalore
+    -
 
 
 - intent: hotel_query

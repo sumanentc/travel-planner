@@ -45,6 +45,7 @@ class TravelItineraryAction(Action):
             return dispatcher.utter_message(response='utter_ask_destination')
         if not selected_days:
             return dispatcher.utter_message(response='utter_ask_days')
+        print(inp_message)
         latest_message = f"I'm looking for recommendations and suggestions for things to do in destination {selected_place} during {selected_month} month for a {selected_days} days trip with hotel stay. {inp_message} Can you help me create an day wise itinerary with hotel stay?"
         prompt = get_itinerary_prompt(latest_message)
         message = get_llm_response(prompt)
@@ -83,7 +84,7 @@ class TravelCostAction(Action):
             return dispatcher.utter_message(response='utter_ask_source')
         if not head_count:
             return dispatcher.utter_message(response='utter_ask_head_count')
-
+        print(inp_message)
         if selected_itinerary:
             stay_location_prompt = get_hotel_names_prompt(selected_itinerary)
             resp = run(stay_location_prompt)
@@ -113,6 +114,7 @@ class TravelQueryAction(Action):
         selected_place = tracker.get_slot('destination')
         travel_check_prompt = get_travel_query_check_prompt(inp_message)
         resp = run(travel_check_prompt)
+        print(inp_message)
         print(resp)
         if not resp['travel_query']:
             dispatcher.utter_message(response='utter_please_rephrase')
@@ -142,6 +144,7 @@ class HotelQueryAction(Action):
         selected_place = tracker.get_slot('destination')
         selected_itinerary = tracker.get_slot('preffered_itinerary')
         travel_check_prompt = get_hotel_query_check_prompt(inp_message)
+        print(inp_message)
         resp = run(travel_check_prompt)
         # print(resp)
         if not resp['hotel_query']:
@@ -180,6 +183,7 @@ class ActionUnlikelyIntent(Action):
             print(current_intent_name)
             if current_intent_name == "nlu_fallback":
                 user_input = tracker.latest_message.get('text')
+                print(user_input)
                 if requested_slot := tracker.slots.get('requested_slot'):
                     if requested_slot == 'month':
                         month_check_prompt = get_month_check_prompt(user_input)
@@ -204,6 +208,9 @@ class ActionUnlikelyIntent(Action):
                     resp = run(travel_check_prompt)
                     if not resp['travel_query']:
                         dispatcher.utter_message(response='utter_please_rephrase')
+            elif current_intent_name == "greet":
+                dispatcher.utter_message(text='Hello! Let me know how may i help you?')
+
         return []
 
 
@@ -374,7 +381,7 @@ def get_llm_response(input: str):
 
     # Initiate the agent that will respond to our queries
     # Set verbose=True to share the CoT reasoning the LLM goes through
-    agent_executor = AgentExecutor.from_agent_and_tools(agent=agent, tools=tools, verbose=True, max_iterations=10,
+    agent_executor = AgentExecutor.from_agent_and_tools(agent=agent, tools=tools, verbose=False, max_iterations=10,
                                                         handle_parsing_errors="Check your output and make sure it conforms!")
     try:
         agent_response = agent_executor.run(input)
