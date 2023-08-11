@@ -48,6 +48,30 @@ stories:
     - action: travel_itinerary_action
     - action: utter_do_you_have_question
 
+
+- story: travel query with itenary and stay
+  steps:
+    - intent: travel_query
+    - action: travel_query_action
+    - action: utter_do_you_have_question
+    - intent: travel_itinerary
+    - action: travel_info_form
+    - active_loop: travel_info_form
+    - slot_was_set:
+        - requested_slot: destination
+    - slot_was_set:
+        - requested_slot: month
+    - slot_was_set:
+        - requested_slot: days
+    - slot_was_set:
+        - requested_slot: null
+    - active_loop: null
+    - action: travel_itinerary_action
+    - action: utter_do_you_have_question
+    - intent: hotel_query
+    - action: hotel_query_action
+    - action: utter_do_you_have_question
+
 - story: travel itinerary with greet
   steps:
     - intent: greet
@@ -82,6 +106,27 @@ stories:
         - requested_slot: null
     - active_loop: null
     - action: travel_itinerary_action
+    - action: utter_do_you_have_question
+
+
+- story: travel itinerary with stay
+  steps:
+    - intent: travel_itinerary
+    - action: travel_info_form
+    - active_loop: travel_info_form
+    - slot_was_set:
+        - requested_slot: destination
+    - slot_was_set:
+        - requested_slot: month
+    - slot_was_set:
+        - requested_slot: days
+    - slot_was_set:
+        - requested_slot: null
+    - active_loop: null
+    - action: travel_itinerary_action
+    - action: utter_do_you_have_question
+    - intent: hotel_query
+    - action: hotel_query_action
     - action: utter_do_you_have_question
 
 - story: travel itinerary diectly with month interjection

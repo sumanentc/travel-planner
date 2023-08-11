@@ -34,14 +34,14 @@ class TravelItineraryAction(Action):
         selected_month = tracker.get_slot('month')
         selected_place = tracker.get_slot('destination')
         selected_days = tracker.get_slot('days')
+        selected_theme = tracker.get_slot('theme')
         inp_message = tracker.latest_message['text']
         print('Inside TravelItineraryAction')
         print(selected_month)
         print(selected_place)
         print(selected_days)
         print(inp_message)
-        itinerary_intent = get_user_input_for_itinerary(tracker)
-        print(itinerary_intent)
+        print(selected_theme)
 
         if not selected_month:
             return dispatcher.utter_message(response='utter_ask_month')
@@ -55,7 +55,9 @@ class TravelItineraryAction(Action):
                 selected_place = resp['destination']
         if not selected_days:
             return dispatcher.utter_message(response='utter_ask_days')
-        latest_message = f"I'm looking for day wise travel itinerary for destination {selected_place} during {selected_month} month for a {selected_days} days trip with stay. {itinerary_intent or inp_message}."
+        if selected_theme:
+            inp_message = f"{inp_message}. Preference: {selected_theme}"
+        latest_message = f"I'm looking for day wise travel itinerary for destination {selected_place} during {selected_month} month for a {selected_days} days trip. {inp_message}."
         prompt = get_itinerary_prompt(latest_message)
         message = get_llm_response(prompt)
         dispatcher.utter_message(text=message)
@@ -163,17 +165,17 @@ def execute_hotel_query(tracker: Tracker, dispatcher: CollectingDispatcher):
     else:
         if selected_itinerary:
             inp_message = (
-                f'{inp_message}. Travel itinerary: {selected_itinerary}.'
+                f'{inp_message}. Travel itinerary: \n{selected_itinerary}.\n'
             )
         elif selected_place and selected_month:
             inp_message = (
-                    f'{inp_message}. Travel destination is {selected_place}.'
-                    + f'. Month to travel {selected_month}.'
+                    f'{inp_message}. Travel destination: {selected_place}.'
+                    + f'. Month to travel: {selected_month}.'
             )
         elif selected_place:
-            inp_message = f'{inp_message}. Travel destination is {selected_place}.'
+            inp_message = f'{inp_message}. Travel destination: {selected_place}.'
         elif selected_month:
-            inp_message = f'{inp_message}. Month to travel {selected_month}.'
+            inp_message = f'{inp_message}. Month to travel: {selected_month}.'
         prompt = get_hotel_enquiry_prompt(inp_message)
         message = get_llm_response(prompt)
         dispatcher.utter_message(text=message)
@@ -309,7 +311,7 @@ def _handle_error(error) -> str:
 
 
 def get_llm_response(input: str):
-    llm = ChatOpenAI(temperature=0, model_name='gpt-3.5-turbo-0613')
+    llm = ChatOpenAI(temperature=0.1, model_name='gpt-3.5-turbo-0613')
     langchain.llm_cache = SQLiteCache(database_path=".langchain.db")
     llm_math_chain = LLMMathChain.from_llm(llm=llm, verbose=False)
     tools = [
@@ -507,9 +509,11 @@ def get_hotel_enquiry_prompt(user_input: str):
     return f"""
     - You are an expert travel planner for Hotel, Hostel, Resort or Villa bookings.
     - Your task is to extract relevant information from the UserInput below, delimited by triple backticks and help me provide stay recommendations:
-    - Suggest places to stay for the given itinerary or destination with the given preference like budget in the input.
+    - Suggest places to stay for the destination with the given preference like budget, cost etc in the input.
     - If month is provided make sure the recommended places to stay are available in that month.
-    - Add some recent reviews of places to stay if available.
+    - If travel itinerary is provided, Must suggest the stay as per the Itinerary.
+    - Remove the suggested places to stay preset already in Travel Itinerary.
+    - Add some recent reviews of all the places to stay if available.
     - Don't mention As an expert travel planner, in the response.
     - Don't mention based on the user input, in the response.
     - Don't mention Based on the UserInput, in the response
@@ -636,7 +640,7 @@ def get_travel_query_check_prompt(user_input: str):
 def get_hotel_query_check_prompt(user_input: str):
     return f"""
                 Identify the following items from the Input Text: 
-                - Is the input query related to stay enquiry ? (True or False)
+                - Is the input query related to some stay in Hotel or Hostel or Resort? (True or False)
                 Input Text is delimited with <>. \
                 Format your response as a JSON object with \
                 "hotel_query" as the key.
@@ -689,7 +693,7 @@ def run(prompt: str):
 def get_user_input_for_itinerary(tracker: Tracker):
     reversed_events = list(reversed(tracker.events))
     itinerary_intent = None
-    for event in reversed_events:
+    for event in reversed_events[:5]:
         if event.get('event') == 'user':
             parse_data = event.get('parse_data')
             if parse_data:

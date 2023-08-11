@@ -94,6 +94,7 @@ nlu:
     - plan a trip to [Leh Ladakh](destination)
     - plan a trip to [Bangalore](destination)
     - plan a trip to [Lakshadweep](destination)
+    - Plan a trip to [Chamonix](destination) in the month of [jan](days)
     - help me with a trip itenary for [egypt](destination)
     - help me with a trip itenary for [Russia](destination)
     - help me with a trip itenary for [Korea](destination)
@@ -152,7 +153,14 @@ nlu:
     - Who can I contact to get assistance with organizing my travel itinerary for [Seville](destination) in [oct](month) for a [10](days) trip?
     - Who can I contact to get assistance with organizing my travel itinerary for [Noth East India](destination) in [October](month)?
     - I would appreciate some help in creating a detailed itinerary for my [10](days) trip to [Spain](destination) in [January](month). Any suggestions?
-    - suggest a spiritual vaccation in [Bhutan](destination)?
+    - suggest a [spiritual](theme) vaccation in [Bhutan](destination)?
+    - plan a [divine](theme) trip to [Kashi](destination).
+    - Arrange a trip itinerary for [5](days) days of [leisure and relaxation](theme) in [Munnar](destination).
+    - Create an itinerary for a tranquil [5](days) day vacation in [Munnar](destination).
+    - I'd like to curate a vacation that prioritizes [relaxation](theme). Can you help in arranging a trip to a [Rishikesh](destination) that aligns with this objective?
+    - Could you assist in planning an [adventurous](theme) vacation to a [Leh Ladakh](destination) known for its wildlife and exciting activities?
+    - Could you assist in planning an adventurous vacation to a [Mussoorie](destination) known for its [wildlife](theme) and exciting activities?
+    - Could you assist me in organizing a [backpacking](theme) adventure to [Goa](destination)?
     - [Feb](month)
     - month is [march](month)
     - month [Feb](month)
@@ -184,7 +192,6 @@ nlu:
     - Places to visit in the month of [December](month) in India
     - Places to visit in the month of [December](month) in Europe
     - Plan a trip in the month of [July](month)
-    - Plan a trip in [July](month)
     - Recommend some place in the month of [Jan](month)?
     - Can you suggest me some place in India?
     - Can you suggest me some place ?
@@ -218,6 +225,9 @@ nlu:
     - Which destinations are popular for [spiritual](theme) experience ?
     - Do you know about Podicherry?
     - Suggest some weekend gateways in Bangalore
+    - which state in India gives the best [bagpacking](theme) experience?
+    - which places in the world provide the best [bagpacking](theme) experience?
+    - which places in Europe provide the best [bagpacking](theme) experience?
 
 
 - intent: hotel_query
@@ -243,6 +253,9 @@ nlu:
       - Could you recommend reasonably priced [resorts](stay) that won't break the bank?
       - Can you help me find [hotels](stay) that offer good value for the price?
       - Can you help me find [resorts](stay) that offer good value for the price?
+      - can i stay in Sentosa Island [resort](stay) in Signapore?
+      - can i stay in [Sentosa Island] [hotel](stay) in Signapore?
+      - can you suggest some other [hotels](stay)?
 
 - intent: trip_cost
   examples: |
@@ -260,6 +273,7 @@ nlu:
     - I would like to get an idea of the estimated cost for the trip starting from [Agra](source), considering only [one](head_count) person. Can you assist me with that?
     - Can you help me estimate the expenses for the trip originating from [Pune](source) for a [single](head_count) traveler?
     - From [Sweden](source), what would be the approximate cost for the trip for [one](head_count) person? I'm looking for an estimate specifically for solo travel.
+    - how much will be the trip [cost](budget)?
 
 - lookup: month
   examples: |
