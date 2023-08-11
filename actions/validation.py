@@ -21,7 +21,7 @@ class ValidateTravelInfoSlots(ValidationAction):
     ) -> Dict[Text, Any]:
         """Validate month value."""
         print(f"Validating month {slot_value}")
-        print(f"User Input {tracker.latest_message}")
+        #print(f"User Input {tracker.latest_message}")
         if slot_value.lower() in valid_month.keys():
             return {"month": slot_value.lower()}
         else:
@@ -37,7 +37,7 @@ class ValidateTravelInfoSlots(ValidationAction):
     ) -> Dict[Text, Any]:
         """Validate days value."""
         print(f"Validating days {slot_value}")
-        print(f"User Input {tracker.latest_message}")
+        #print(f"User Input {tracker.latest_message}")
         regex = r'^[0-9]+$'
         if re.fullmatch(regex, slot_value):
             return {"days": slot_value}
@@ -54,7 +54,7 @@ class ValidateTravelInfoSlots(ValidationAction):
     ) -> Dict[Text, Any]:
         """Validate place value."""
         print(f"Validating place {slot_value}")
-        print(f"User Input {tracker.latest_message}")
+        #print(f"User Input {tracker.latest_message}")
         if slot_value and slot_value.replace(" ", "").isalpha():
             return {"destination": slot_value}
         else:
@@ -69,7 +69,7 @@ class ValidateTravelInfoSlots(ValidationAction):
     ) -> Dict[Text, Any]:
         """Validate place value."""
         print(f"Validating place {slot_value}")
-        print(f"User Input {tracker.latest_message}")
+        #print(f"User Input {tracker.latest_message}")
         if slot_value and slot_value.replace(" ", "").isalpha():
             return {"source": slot_value}
         else:

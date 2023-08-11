@@ -9,7 +9,6 @@
 import json
 import re
 from typing import Any, Text, Dict, List, Union
-from rasa_sdk.events import SlotSet
 
 import langchain
 from langchain import LLMChain, LLMMathChain
@@ -18,8 +17,9 @@ from langchain.cache import SQLiteCache
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import BaseChatPromptTemplate
 from langchain.schema import HumanMessage, AgentAction, AgentFinish, SystemMessage
-from langchain.tools import DuckDuckGoSearchRun, Tool, AIPluginTool
+from langchain.tools import DuckDuckGoSearchRun, Tool
 from rasa_sdk import Action, Tracker
+from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 
 
@@ -39,14 +39,23 @@ class TravelItineraryAction(Action):
         print(selected_month)
         print(selected_place)
         print(selected_days)
+        print(inp_message)
+        itinerary_intent = get_user_input_for_itinerary(tracker)
+        print(itinerary_intent)
+
         if not selected_month:
             return dispatcher.utter_message(response='utter_ask_month')
         if not selected_place:
-            return dispatcher.utter_message(response='utter_ask_destination')
+            place_check_prompt = get_place_check_prompt(inp_message)
+            resp = run(place_check_prompt)
+            if resp and not resp['valid_place']:
+                return dispatcher.utter_message(response='utter_ask_destination')
+            else:
+                SlotSet("destination", resp['destination'])
+                selected_place = resp['destination']
         if not selected_days:
             return dispatcher.utter_message(response='utter_ask_days')
-        print(inp_message)
-        latest_message = f"I'm looking for recommendations and suggestions for things to do in destination {selected_place} during {selected_month} month for a {selected_days} days trip with hotel stay. {inp_message} Can you help me create an day wise itinerary with hotel stay?"
+        latest_message = f"I'm looking for day wise travel itinerary for destination {selected_place} during {selected_month} month for a {selected_days} days trip with stay. {itinerary_intent or inp_message}."
         prompt = get_itinerary_prompt(latest_message)
         message = get_llm_response(prompt)
         dispatcher.utter_message(text=message)
@@ -91,7 +100,6 @@ class TravelCostAction(Action):
         if resp and resp['valid_stay']:
             preffered_stay = resp['stay']
             print(preffered_stay)
-
         latest_message = f"I'm looking for overall cost of my trip expenses from departure: {selected_source} to destination: {selected_destination} during the month: {selected_month} for {selected_days} days of a trip." \
                          f"Number of people travelling is {head_count}. Itinerary: {selected_itinerary}." \
                          f"Instruction from user {inp_message} "
@@ -138,35 +146,38 @@ class HotelQueryAction(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        print('Inside HotelQueryAction')
-        inp_message = tracker.latest_message['text']
-        selected_month = tracker.get_slot('month')
-        selected_place = tracker.get_slot('destination')
-        selected_itinerary = tracker.get_slot('preffered_itinerary')
-        travel_check_prompt = get_hotel_query_check_prompt(inp_message)
-        print(inp_message)
-        resp = run(travel_check_prompt)
-        # print(resp)
-        if not resp['hotel_query']:
-            dispatcher.utter_message(response='utter_please_rephrase')
-        else:
-            if selected_itinerary:
-                inp_message = (
-                    f'{inp_message}. Travel itinerary: {selected_itinerary}.'
-                )
-            elif selected_place and selected_month:
-                inp_message = (
-                        f'{inp_message}. Travel destination is {selected_place}.'
-                        + f'. Month to travel {selected_month}.'
-                )
-            elif selected_place:
-                inp_message = f'{inp_message}. Travel destination is {selected_place}.'
-            elif selected_month:
-                inp_message = f'{inp_message}. Month to travel {selected_month}.'
-            prompt = get_hotel_enquiry_prompt(inp_message)
-            message = get_llm_response(prompt)
-            dispatcher.utter_message(text=message)
-        return []
+        return execute_hotel_query(tracker, dispatcher)
+
+
+def execute_hotel_query(tracker: Tracker, dispatcher: CollectingDispatcher):
+    print('Inside HotelQueryAction')
+    inp_message = tracker.latest_message['text']
+    selected_month = tracker.get_slot('month')
+    selected_place = tracker.get_slot('destination')
+    selected_itinerary = tracker.get_slot('preffered_itinerary')
+    travel_check_prompt = get_hotel_query_check_prompt(inp_message)
+    print(inp_message)
+    resp = run(travel_check_prompt)
+    if not resp['hotel_query']:
+        dispatcher.utter_message(response='utter_please_rephrase')
+    else:
+        if selected_itinerary:
+            inp_message = (
+                f'{inp_message}. Travel itinerary: {selected_itinerary}.'
+            )
+        elif selected_place and selected_month:
+            inp_message = (
+                    f'{inp_message}. Travel destination is {selected_place}.'
+                    + f'. Month to travel {selected_month}.'
+            )
+        elif selected_place:
+            inp_message = f'{inp_message}. Travel destination is {selected_place}.'
+        elif selected_month:
+            inp_message = f'{inp_message}. Month to travel {selected_month}.'
+        prompt = get_hotel_enquiry_prompt(inp_message)
+        message = get_llm_response(prompt)
+        dispatcher.utter_message(text=message)
+    return []
 
 
 class ActionUnlikelyIntent(Action):
@@ -210,7 +221,8 @@ class ActionUnlikelyIntent(Action):
                         dispatcher.utter_message(response='utter_please_rephrase')
             elif current_intent_name == "greet":
                 dispatcher.utter_message(text='Hello! Let me know how may i help you?')
-
+            elif current_intent_name == "hotel_query":
+                return execute_hotel_query(tracker, dispatcher)
         return []
 
 
@@ -381,7 +393,7 @@ def get_llm_response(input: str):
 
     # Initiate the agent that will respond to our queries
     # Set verbose=True to share the CoT reasoning the LLM goes through
-    agent_executor = AgentExecutor.from_agent_and_tools(agent=agent, tools=tools, verbose=False, max_iterations=10,
+    agent_executor = AgentExecutor.from_agent_and_tools(agent=agent, tools=tools, verbose=True, max_iterations=10,
                                                         handle_parsing_errors="Check your output and make sure it conforms!")
     try:
         agent_response = agent_executor.run(input)
@@ -407,11 +419,11 @@ def get_itinerary_prompt(user_input: str):
     - You are an expert travel planner.
     - Your task is to extract relevant information from the UserInput below, delimited by triple backticks and help me prepare a travel itinerary.
     - Travel itinerary should be provided day wise.
-    - Search for hotels,resort or places to stay for each of the recommended places.
-    - Must include recommended hotel or resort name for each day.
-    - Must include the Hotel check-in and check-out activity for each and every hotel in the itinerary.
-    - Please consider the user preference such as month of travel, destination, number of days of travel, themes and any other preferences provided in the context.
-    - Please check the best month of travel to the input destination. If it is different from input month then also provide recommendation for the best month to travel to input destination.
+    - Please consider the user preference such as month of travel, destination, number of days of travel, preferences like kids friendly places, less travel, spiritual, divine or any other preferences provided in the context.
+    - Include Things to do in the destination, adventures to try, places to visit.
+    - Please check the best month of travel to the input destination. If it is different from input month then also provide recommendation for the best month to travel to the destination.
+    - Please suggest Best Shopping Markets if available
+    - At the end include some Places to Stay:
     - Don't mention "As an expert travel planner", in the response.
     - Don't mention "based on the user input", in the response.
     - Don't mention "Based on the UserInput", in the response
@@ -422,6 +434,27 @@ def get_itinerary_prompt(user_input: str):
     - Don't mention "Based on your preferences", in the response
     - Don't mention "Based on the search results", in the response
     - The output must be in raw markdown for javascript format in Paragraph style.
+    
+    Here is a day-wise travel itinerary for your 3-day trip to Goa in December:
+    Day 1:
+    - Start your day by visiting Panjim and Old Goa. Explore the beautiful architecture and historical sites in Old Goa, including the Basilica of Bom Jesus, a UNESCO World Heritage Site.
+    - In the evening, head to Anjuna Beach for some party time. Enjoy the vibrant atmosphere, live music, and delicious food at the beach shacks.
+    Day 2:
+    - Spend the day at Benaulim Beach. Relax on the pristine sandy beach, try water sports activities, and enjoy the famous shacks.
+    - In the evening, visit Dudhsagar Falls, a must-visit attraction in Goa. Witness the majestic waterfall and take in the breathtaking views.
+    .
+    .
+    .
+    Day 10:
+    - Explore the beautiful Arambol Beach. Take a leisurely walk along the shoreline, indulge in beach activities, and enjoy the stunning sunset.
+
+    Best Time to Visit Goa: The best time to visit Goa is from November to February when the weather is pleasant and ideal for sightseeing and beach activities.
+    Best Shopping Markets in Goa:
+    - Anjuna Beach Flea Market: Visit this famous market on Wednesdays for a wide range of shopping options.
+    - Palolem Market: Explore this market for touristy items like caps and shorts.
+    - Calculo Mall: The first shopping mall in Goa, offering a variety of Indian brands and dining options.
+    Best Places to Stay: Om Sai Beach Huts in Agonda, Art Resort in Palolem
+    Enjoy your trip to Goa and have a wonderful time exploring the beautiful beaches, historical sites, and vibrant markets!
     UserInput: ```{user_input}```
     """
 
@@ -472,11 +505,11 @@ def get_travel_month_prompt(user_input: str):
 
 def get_hotel_enquiry_prompt(user_input: str):
     return f"""
-    - You are an expert travel planner for Hotel, Resort or Villa bookings.
-    - Your task is to extract relevant information from the UserInput below, delimited by triple backticks and help me provide hotel recommendations:
-    - Suggest Hotels or Resorts according to the given itinerary or destination with the given preference if provided like budget in the input.
-    - If month is provided make sure the recommended Hotels or Resorts are available in that month.
-    - Add some recent reviews of each hotels if available.
+    - You are an expert travel planner for Hotel, Hostel, Resort or Villa bookings.
+    - Your task is to extract relevant information from the UserInput below, delimited by triple backticks and help me provide stay recommendations:
+    - Suggest places to stay for the given itinerary or destination with the given preference like budget in the input.
+    - If month is provided make sure the recommended places to stay are available in that month.
+    - Add some recent reviews of places to stay if available.
     - Don't mention As an expert travel planner, in the response.
     - Don't mention based on the user input, in the response.
     - Don't mention Based on the UserInput, in the response
@@ -603,7 +636,7 @@ def get_travel_query_check_prompt(user_input: str):
 def get_hotel_query_check_prompt(user_input: str):
     return f"""
                 Identify the following items from the Input Text: 
-                - Is the input query related to hotel enquiry ? (True or False)
+                - Is the input query related to stay enquiry ? (True or False)
                 Input Text is delimited with <>. \
                 Format your response as a JSON object with \
                 "hotel_query" as the key.
@@ -651,3 +684,21 @@ def run(prompt: str):
         print(e)
         return json.loads("")
     return json.loads(response.content)
+
+
+def get_user_input_for_itinerary(tracker: Tracker):
+    reversed_events = list(reversed(tracker.events))
+    itinerary_intent = None
+    for event in reversed_events:
+        if event.get('event') == 'user':
+            parse_data = event.get('parse_data')
+            if parse_data:
+                intent = parse_data.get('intent')
+                #print(intent)
+                if intent.get('name') == 'travel_itinerary' and intent.get('confidence') > 0.7:
+                    itinerary_intent = event.get('text')
+    return itinerary_intent
+
+
+
+

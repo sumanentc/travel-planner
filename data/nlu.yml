@@ -218,7 +218,6 @@ nlu:
     - Which destinations are popular for [spiritual](theme) experience ?
     - Do you know about Podicherry?
     - Suggest some weekend gateways in Bangalore
-    -
 
 
 - intent: hotel_query
