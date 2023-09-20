@@ -228,6 +228,15 @@ nlu:
     - which state in India gives the best [bagpacking](theme) experience?
     - which places in the world provide the best [bagpacking](theme) experience?
     - which places in Europe provide the best [bagpacking](theme) experience?
+    - Could you provide suggestions for [lesser-known](theme) and unique travel destinations for an upcoming holiday?
+    - I'm interested in discovering [offbeat](theme) places to visit. Can you recommend some less touristy destinations for a holiday?
+    - I'm looking for [unconventional](theme) travel ideas. Could you suggest some offbeat locations that offer a distinct holiday experience?
+    - Are there any [offbeat](theme) travel destinations you'd recommend for a holiday? I'm keen on exploring places that are not commonly frequented.
+    - Can you suggest some great places for a [family](theme) vacation? I'm looking for destinations that cater to all family members.
+    - I'm looking to plan a vacation with my family, including [kids](theme). Can you recommend destinations that are enjoyable and safe for [children](theme)?
+    - Could you help me with ideas for a [family](theme) getaway? I'm interested in finding destinations where both kids and adults can have a great time.
+    - I'm planning a holiday with my family. Could you provide recommendations for destinations that offer [family-friendly](theme) activities and attractions?
+
 
 
 - intent: hotel_query
