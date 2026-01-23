@@ -68,8 +68,8 @@ The email includes your complete travel plan with all details, making it easy to
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/roamwise_v2.git
-   cd roamwise_v2
+   git clone https://github.com/sumanentc/travel-planner.git
+   cd travel-planner
    ```
 
 2. **Install dependencies using uv**
@@ -145,24 +145,36 @@ The email includes your complete travel plan with all details, making it easy to
 ## 🗂️ Project Structure
 
 ```
-roamwise_v2/
-├── agents/                 # Agent implementations
-│   ├── query_analyzer.py  # Query analysis agent
-│   ├── validator.py       # Intent validation agent
-│   ├── entity_identifier.py  # Entity extraction agent
-│   ├── prompts.py         # System prompts for all agents
-│   └── ...
-├── models/                # Pydantic models
-│   └── agent_models.py    # Data models for agents
-├── tools/                 # Custom tools and utilities
-├── tests/                 # Test suite
-├── images/                # Application images and assets
-├── .chainlit/             # Chainlit configuration
-│   └── config.toml        # App configuration
-├── app.py                 # Main Chainlit application
-├── workflow.py            # LangGraph workflow definition
-├── pyproject.toml         # Project dependencies
-└── README.md              # This file
+travel-planner/
+├── agents/                    # Agent implementations
+│   ├── validator.py           # Intent validation agent
+│   ├── query_analyzer.py      # Query analysis agent
+│   ├── entity_identifier.py   # Entity extraction agent
+│   ├── transport.py           # Transport search agent
+│   ├── accomodation.py        # Accommodation search agent
+│   ├── itinerary.py           # Itinerary planning agent
+│   ├── email_agent.py         # Email sending agent
+│   ├── decision.py            # Decision routing agent
+│   └── prompts.py             # System prompts for all agents
+├── models/                    # Pydantic models
+│   └── agent_models.py        # Data models for agents
+├── tools/                     # Custom tools and utilities
+│   └── custom_tools.py        # Web search, transport, accommodation tools
+├── tests/                     # Test suite
+├── images/                    # Application images and assets
+├── .chainlit/                 # Chainlit configuration
+│   └── config.toml            # App configuration
+├── data/                      # Data storage for deep agents
+├── public/                    # Public assets
+├── app.py                     # Main Chainlit application
+├── workflow.py                # LangGraph workflow definition
+├── utils.py                   # Utility functions
+├── chainlit.md                # Chainlit welcome screen
+├── pyproject.toml             # Project dependencies (uv)
+├── .env.sample                # Environment variables template
+├── .gitignore                 # Git ignore rules
+├── CHAT_HISTORY_SETUP.md      # Chat history configuration guide
+└── README.md                  # This file
 ```
 
 ## 🔧 Configuration
