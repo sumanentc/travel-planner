@@ -1,0 +1,3 @@
+a[href*='https://chainlit.io'] {
+    visibility: hidden;
+}
